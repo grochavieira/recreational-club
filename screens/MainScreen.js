@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 
 import Card from './../components/Card';
+import CardCommunity from './../components/CardCommunity';
 
 import Header from '../components/Header';
 class LoginScreen extends Component {
@@ -12,28 +13,28 @@ class LoginScreen extends Component {
           <Header textHeader="TELA PRINCIPAL" statusBarColor="#4520E8" />
 
           <View style={styles.optionsContainer}>
-            <Card
-              iconName="person-add"
+            <CardCommunity
+              iconName="account-plus"
               cardText="Cadastrar Associado"
               action={() => this.props.navigation.push('Register')}
             />
-            <Card
-              iconName="list"
+            <CardCommunity
+              iconName="account-details"
               cardText="Listar Associados"
               action={() => this.props.navigation.push('ListRegisters')}
             />
-            <Card
-              iconName="update"
+            <CardCommunity
+              iconName="account-edit"
               cardText="Atualizar Associados"
               action={() => this.props.navigation.push('UpdateRegisters')}
             />
-            <Card
-              iconName="remove"
+            <CardCommunity
+              iconName="account-remove"
               cardText="Remover Associados"
               action={() => this.props.navigation.push('RemoveRegisters')}
             />
-            <Card
-              iconName="info"
+            <CardCommunity
+              iconName="information"
               cardText="Sobre"
               action={() => this.props.navigation.push('About')}
             />
@@ -53,9 +54,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#4520E8',
   },
   optionsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
+    width: '75%',
+    justifyContent: 'center',
   },
 });
 
