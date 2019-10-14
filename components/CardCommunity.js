@@ -1,13 +1,13 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
-const Card = props => {
+const CardCommunity = props => {
   return (
     <TouchableOpacity onPress={props.action}>
       <View style={styles.cardContainer}>
         <View style={styles.iconStyle}>
-          <Icon name={props.iconName} size={30} color="#FFF" />
+          <IconCommunity name={props.iconName} size={30} color="#FFF" />
         </View>
         <Text style={styles.cardText}>{props.cardText}</Text>
       </View>
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Card;
+export default CardCommunity;
