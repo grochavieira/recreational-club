@@ -31,6 +31,9 @@
 		ACA21555A3384C6DB11D2AD9 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBA3EA22B64B46FFBB2E0568 /* Octicons.ttf */; };
 		4A9663F018E143DC9CF3A87E /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 07EBE347132A406E97D3BB6A /* SimpleLineIcons.ttf */; };
 		3407C0F29352446C8B440A14 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1EC462B7C54E445696782A46 /* Zocial.ttf */; };
+		4242F71DDEFD41959240DB5F /* libGCDWebServers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9704EB51CD50477A9C903497 /* libGCDWebServers.a */; };
+		4319BBFCF34E43748D42A12D /* libRealmJS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19E891D3C41249419459EAA1 /* libRealmJS.a */; };
+		BA2E660C87D247C698018E9B /* RealmJSTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = 668B83AF705944918BF79C47 /* RealmJSTests.xctest */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +85,10 @@
 		FBA3EA22B64B46FFBB2E0568 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		07EBE347132A406E97D3BB6A /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1EC462B7C54E445696782A46 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5DF61F2396894F23ACCF1A4E /* RealmJS.xcodeproj */ = {isa = PBXFileReference; name = "RealmJS.xcodeproj"; path = "../node_modules/realm/src/RealmJS.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		9704EB51CD50477A9C903497 /* libGCDWebServers.a */ = {isa = PBXFileReference; name = "libGCDWebServers.a"; path = "libGCDWebServers.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		19E891D3C41249419459EAA1 /* libRealmJS.a */ = {isa = PBXFileReference; name = "libRealmJS.a"; path = "libRealmJS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		668B83AF705944918BF79C47 /* RealmJSTests.xctest */ = {isa = PBXFileReference; name = "RealmJSTests.xctest"; path = "RealmJSTests.xctest"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.cfbundle; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +103,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4242F71DDEFD41959240DB5F /* libGCDWebServers.a in Frameworks */,
+				4319BBFCF34E43748D42A12D /* libRealmJS.a in Frameworks */,
+				BA2E660C87D247C698018E9B /* RealmJSTests.xctest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +169,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				5DF61F2396894F23ACCF1A4E /* RealmJS.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -536,6 +547,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clube_recreativo.app/clube_recreativo";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../**",
+				);
 			};
 			name = Debug;
 		};
@@ -555,6 +576,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clube_recreativo.app/clube_recreativo";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../**",
+				);
 			};
 			name = Release;
 		};
@@ -574,6 +605,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = clube_recreativo;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../**",
+				);
 			};
 			name = Debug;
 		};
@@ -592,6 +627,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = clube_recreativo;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../**",
+				);
 			};
 			name = Release;
 		};
@@ -619,6 +658,16 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../**",
+				);
 			};
 			name = Debug;
 		};
@@ -646,6 +695,16 @@
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../**",
+				);
 			};
 			name = Release;
 		};
@@ -672,6 +731,16 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clube_recreativo-tvOS.app/clube_recreativo-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../**",
+				);
 			};
 			name = Debug;
 		};
@@ -698,6 +767,16 @@
 				SDKROOT = appletvos;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clube_recreativo-tvOS.app/clube_recreativo-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../**",
+				);
 			};
 			name = Release;
 		};
