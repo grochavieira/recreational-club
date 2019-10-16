@@ -7,10 +7,10 @@ const Header = props => {
   return (
     <View style={{...styles.headerContainer, ...props.style}}>
       <StatusBar
+        translucent
         barStyle="light-content"
-        backgroundColor={props.statusBarColor}
+        backgroundColor="transparent"
       />
-
       <Text style={{...styles.headerText, ...props.style}}>
         {props.textHeader}
       </Text>
@@ -21,14 +21,13 @@ const Header = props => {
 const styles = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
-    marginTop: 30,
-    height: '20%',
+    marginTop: 80,
+    marginBottom: 50,
   },
   headerText: {
     color: '#FFF',
     fontWeight: 'bold',
-    fontSize: 16,
-    height: '50%',
+    fontSize: 20,
   },
 });
 

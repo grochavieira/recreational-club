@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
+import Colors from '../constants/colors';
 import Card from './../components/Card';
 import CardCommunity from './../components/CardCommunity';
 
@@ -8,9 +10,11 @@ import Header from '../components/Header';
 class LoginScreen extends Component {
   render() {
     return (
-      <View style={styles.cor}>
+      <LinearGradient
+        colors={[Colors.primaria, Colors.secundaria]}
+        style={styles.cor}>
         <View style={styles.principalContainer}>
-          <Header textHeader="TELA PRINCIPAL" statusBarColor="#4520E8" />
+          <Header textHeader="Tela Principal" />
 
           <View style={styles.optionsContainer}>
             <CardCommunity
@@ -40,7 +44,7 @@ class LoginScreen extends Component {
             />
           </View>
         </View>
-      </View>
+      </LinearGradient>
     );
   }
 }

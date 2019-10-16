@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../constants/colors';
 import Header from '../components/Header';
 import IconAwesome from 'react-native-vector-icons/FontAwesome5';
@@ -17,9 +18,11 @@ class AboutScreen extends Component {
 
   render() {
     return (
-      <View style={styles.cor}>
+      <LinearGradient
+        colors={[Colors.primaria, Colors.secundaria]}
+        style={styles.cor}>
         <View style={styles.principalContainer}>
-          <Header textHeader="SOBRE" statusBarColor={Colors.primaria} />
+          <Header textHeader="Sobre" />
           <View style={styles.aboutContainer}>
             <View style={styles.aboutHeader}>
               <IconAwesome
@@ -46,7 +49,7 @@ class AboutScreen extends Component {
             </View>
           </View>
         </View>
-      </View>
+      </LinearGradient>
     );
   }
 }
@@ -58,11 +61,9 @@ const styles = StyleSheet.create({
   },
   cor: {
     flex: 1,
-    backgroundColor: Colors.primaria,
   },
   aboutContainer: {
     width: '80%',
-    height: '60%',
     backgroundColor: 'rgb(255,255,255)',
     borderRadius: 4,
     margin: 10,
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
   aboutHeaderText: {
     color: Colors.primaria,

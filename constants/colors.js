@@ -1,3 +1,4 @@
 export default {
-  primaria: '#4520E8',
+  primaria: '#009FFD',
+  secundaria: '#5DFDCB',
 };
