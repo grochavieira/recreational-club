@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardText: {
-    fontSize: 15,
+    fontSize: 16,
     color: '#FFF',
     margin: 10,
   },

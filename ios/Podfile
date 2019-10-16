@@ -29,6 +29,8 @@ target 'clube_recreativo' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'clube_recreativoTests' do
     inherit! :search_paths
     # Pods for testing

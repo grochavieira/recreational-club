@@ -9,14 +9,16 @@ import {
   SafeAreaView,
 } from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
+
 import Colors from '../constants/colors';
 import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome5';
+import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import Input from '../components/Input';
 import CustomButton from '../components/CustomButton';
 import Header from '../components/Header';
-//import getRealm from '../services/realm';
 
 class RegisterScreen extends Component {
   constructor(props) {
@@ -102,6 +104,17 @@ class RegisterScreen extends Component {
     this.setState({erroSexo: ' '});
   }
 
+  saveClientRegister() {
+    const dados = {
+      id: 1,
+      nomeCompleto: this.state.nome,
+      telefone: this.state.telefone,
+      numDependentes: this.state.numDependentes,
+      sexo: this.state.sexo,
+      aniversario: this.state.aniversario,
+    };
+  }
+
   Cadastra = () => {
     let verificaErros = 0;
     if (this.state.nome === '') {
@@ -145,10 +158,6 @@ class RegisterScreen extends Component {
     }
 
     if (verificaErros === 0) {
-      //realm.write(() => {
-      //realm.create('Client', this.state);
-      //});
-
       Alert.alert('Cadastro realizado com sucesso!');
     } else {
       Alert.alert('Não foi possível realizar o cadastro!');
@@ -157,112 +166,119 @@ class RegisterScreen extends Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.cor}>
+      <LinearGradient
+        colors={[Colors.primaria, Colors.secundaria]}
+        style={styles.cor}>
         <ScrollView
           contentContainerStyle={{flexGrow: 1}}
           showsVerticalScrollIndicator={false}>
           <View style={styles.principalContainer}>
-            <Header
-              textHeader="CADASTRAR ASSOCIADO"
-              statusBarColor={Colors.primaria}
-            />
+            <Header textHeader="Cadastrar Associado" />
 
-            <Input
-              nameIcon="person"
-              textPlaceHolder="Nome Completo"
-              length={30}
-              onChange={this.getNome}
-              inputErrorText={this.state.erroNome}
-            />
-            <Input
-              nameIcon="email"
-              textPlaceHolder="Email"
-              length={30}
-              onChange={this.getMail}
-              inputErrorText={this.state.erroEmail}
-            />
-            <Input
-              nameIcon="phone"
-              textPlaceHolder="Telefone"
-              keyboard="numeric"
-              length={11}
-              onChange={this.getPhone}
-              inputErrorText={this.state.erroTelefone}
-            />
-            <Input
-              nameIcon="people"
-              textPlaceHolder="Número de Dependentes"
-              keyboard="numeric"
-              length={2}
-              onChange={this.getNumDependentes}
-              inputErrorText={this.state.erroNumDependentes}
-            />
+            <View style={styles.principalInputContainer}>
+              <Input
+                nameIcon="person"
+                textPlaceHolder="Nome Completo"
+                length={30}
+                onChange={this.getNome}
+                inputErrorText={this.state.erroNome}
+              />
+              <Input
+                nameIcon="email"
+                textPlaceHolder="Email"
+                length={30}
+                onChange={this.getMail}
+                inputErrorText={this.state.erroEmail}
+              />
+              <Input
+                nameIcon="phone"
+                textPlaceHolder="Telefone"
+                keyboard="numeric"
+                length={11}
+                onChange={this.getPhone}
+                inputErrorText={this.state.erroTelefone}
+              />
+              <Input
+                nameIcon="people"
+                textPlaceHolder="Número de Dependentes"
+                keyboard="numeric"
+                length={2}
+                onChange={this.getNumDependentes}
+                inputErrorText={this.state.erroNumDependentes}
+              />
 
-            <View style={styles.principalDatePickerContainer}>
-              <View style={styles.datePickerContainer}>
-                <Icon name="date-range" size={24} color="#FFF" />
-                <DatePicker
-                  style={{width: '100%'}}
-                  date={this.state.aniversario}
-                  placeholder="Data de Aniversário"
-                  format="DD-MM-YYYY"
-                  minDate="01-01-1910"
-                  maxDate="31-12-2001"
-                  showIcon={false}
-                  onDateChange={this.selectDate}
-                  customStyles={{
-                    dateText: {
-                      fontSize: 15,
-                      color: 'white',
-                      alignSelf: 'flex-start',
-                      marginHorizontal: 10,
-                    },
-                    dateInput: {
-                      borderWidth: 0,
-                    },
-                    placeholderText: {
-                      fontSize: 15,
-                      color: 'rgba(255,255,255,0.5)',
-                    },
-                  }}
-                />
-              </View>
-              <Text style={styles.errorText}>{this.state.erroAniversario}</Text>
-            </View>
-
-            <View style={styles.principalGenderContainer}>
-              <View style={styles.genderContainer}>
-                <View style={styles.genderHeader}>
-                  <Text style={styles.textGenderHeader}>Sexo: </Text>
+              <View style={styles.principalDatePickerContainer}>
+                <View style={styles.datePickerContainer}>
+                  <Icon name="date-range" size={24} color="#FFF" />
+                  <DatePicker
+                    style={{width: '100%'}}
+                    date={this.state.aniversario}
+                    placeholder="Data de Aniversário"
+                    format="DD-MM-YYYY"
+                    minDate="01-01-1910"
+                    maxDate="31-12-2001"
+                    showIcon={false}
+                    onDateChange={this.selectDate}
+                    customStyles={{
+                      dateText: {
+                        fontSize: 16,
+                        color: 'white',
+                        alignSelf: 'flex-start',
+                        marginHorizontal: 5,
+                      },
+                      dateInput: {
+                        borderWidth: 0,
+                      },
+                      placeholderText: {
+                        fontSize: 16,
+                        color: 'rgba(255,255,255,0.7)',
+                        alignSelf: 'flex-start',
+                        marginLeft: 5,
+                      },
+                    }}
+                  />
                 </View>
-                <View>
-                  <View style={styles.maleContainer}>
-                    <CheckBox
-                      value={this.state.masculino}
-                      onChange={() => this.checkBoxMasculino()}
+                <Text style={styles.errorText}>
+                  {this.state.erroAniversario}
+                </Text>
+              </View>
+
+              <View style={styles.principalGenderContainer}>
+                <View style={styles.genderContainer}>
+                  <View style={styles.genderHeader}>
+                    <IconCommunity
+                      name="human-male-female"
+                      size={24}
+                      color="#FFF"
                     />
-                    <IconAwesome name="mars" size={24} color="white" />
-                    <Text style={styles.textGenders}>Masculino</Text>
+                    <Text style={styles.textGenderHeader}>Sexo: </Text>
                   </View>
-                  <View style={styles.femaleContainer}>
-                    <CheckBox
-                      value={this.state.feminino}
-                      onChange={() => this.checkBoxFeminino()}
-                    />
-                    <IconAwesome name="venus" size={24} color="white" />
-                    <Text style={styles.textGenders}>Feminino</Text>
-                  </View>
-                  <View style={styles.othersContainer}>
-                    <CheckBox
-                      value={this.state.outros}
-                      onChange={() => this.checkBoxOutros()}
-                    />
-                    <IconAwesome name="genderless" size={24} color="white" />
-                    <Text style={styles.textGenders}>Outros</Text>
+                  <View>
+                    <View style={styles.maleContainer}>
+                      <CheckBox
+                        value={this.state.masculino}
+                        onChange={() => this.checkBoxMasculino()}
+                      />
+                      <Text style={styles.textGenders}>Masculino</Text>
+                    </View>
+                    <View style={styles.femaleContainer}>
+                      <CheckBox
+                        value={this.state.feminino}
+                        onChange={() => this.checkBoxFeminino()}
+                      />
+                      <Text style={styles.textGenders}>Feminino</Text>
+                    </View>
+                    <View style={styles.othersContainer}>
+                      <CheckBox
+                        value={this.state.outros}
+                        onChange={() => this.checkBoxOutros()}
+                      />
+                      <Text style={styles.textGenders}>Outros</Text>
+                    </View>
                   </View>
                 </View>
+                <Text style={styles.errorText}>{this.state.erroSexo}</Text>
               </View>
-              <Text style={styles.errorText}>{this.state.erroSexo}</Text>
             </View>
 
             <CustomButton
@@ -271,7 +287,7 @@ class RegisterScreen extends Component {
             />
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </LinearGradient>
     );
   }
 }
@@ -279,9 +295,14 @@ class RegisterScreen extends Component {
 const styles = StyleSheet.create({
   principalContainer: {
     alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingBottom: 50,
+  },
+  principalInputContainer: {
     justifyContent: 'center',
-    paddingVertical: 50,
-    paddingBottom: 100,
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 4,
   },
   cor: {
     flex: 1,
@@ -296,7 +317,7 @@ const styles = StyleSheet.create({
   },
   genderContainer: {
     width: '70%',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(0,159,253,0.1)',
     borderRadius: 4,
     margin: 5,
   },
@@ -317,12 +338,12 @@ const styles = StyleSheet.create({
   },
   textGenders: {
     color: '#FFF',
-    fontSize: 15,
+    fontSize: 16,
     margin: 5,
   },
   textGenderHeader: {
-    color: 'rgba(255,255,255,0.5)',
-    fontSize: 15,
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: 16,
     margin: 5,
   },
   genderHeader: {
@@ -333,13 +354,16 @@ const styles = StyleSheet.create({
   },
   principalGenderContainer: {
     alignItems: 'flex-end',
+    marginTop: 5,
   },
   errorText: {
-    color: 'red',
+    fontWeight: 'bold',
+    color: '#FF3366',
     fontSize: 10,
   },
   principalDatePickerContainer: {
     alignItems: 'flex-end',
+    marginTop: 5,
   },
 });
 

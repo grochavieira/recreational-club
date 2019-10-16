@@ -1,6 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {TextInput, View, StyleSheet, Text} from 'react-native';
+import Colors from '../constants/colors';
 
 const Input = props => {
   return (
@@ -11,7 +12,7 @@ const Input = props => {
           {...props}
           style={{...styles.input, ...props.style}}
           placeholder={props.textPlaceHolder}
-          placeholderTextColor="rgba(255,255,255,0.5)"
+          placeholderTextColor="rgba(255,255,255,0.7)"
           secureTextEntry={props.security}
           keyboardType={props.keyboard}
           maxLength={props.length}
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     color: '#FFF',
-    fontSize: 15,
+    fontSize: 16,
   },
   inputContainer: {
     height: 40,
@@ -41,7 +42,8 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 10,
-    color: 'red',
+    fontWeight: 'bold',
+    color: '#FF3366',
     marginHorizontal: 10,
   },
   principalContainer: {

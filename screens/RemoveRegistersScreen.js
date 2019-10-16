@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, Alert} from 'react-native';
 
+import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../constants/colors';
 import CustomButton from '../components/CustomButton';
 import Header from '../components/Header';
@@ -16,18 +17,17 @@ class RegisterScreen extends Component {
 
   render() {
     return (
-      <View style={styles.cor}>
+      <LinearGradient
+        colors={[Colors.primaria, Colors.secundaria]}
+        style={styles.cor}>
         <View style={styles.principalContainer}>
-          <Header
-            textHeader="REMOVER ASSOCIADOS"
-            statusBarColor={Colors.primaria}
-          />
+          <Header textHeader="Remover Associados" />
           <CustomButton
             textButton="REMOVER"
             confirm={() => Alert.alert('Cadastro realizado com sucesso!')}
           />
         </View>
-      </View>
+      </LinearGradient>
     );
   }
 }
