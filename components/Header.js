@@ -2,15 +2,12 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {Text, View, StyleSheet, StatusBar} from 'react-native';
+import Colors from '../constants/colors';
 //<Icon name="headset" size={150} color="#FFF" />
 const Header = props => {
   return (
     <View style={{...styles.headerContainer, ...props.style}}>
-      <StatusBar
-        translucent
-        barStyle="light-content"
-        backgroundColor="transparent"
-      />
+      <StatusBar barStyle="light-content" backgroundColor={Colors.primaria} />
       <Text style={{...styles.headerText, ...props.style}}>
         {props.textHeader}
       </Text>
@@ -21,8 +18,7 @@ const Header = props => {
 const styles = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
-    marginTop: 80,
-    marginBottom: 50,
+    marginVertical: 50,
   },
   headerText: {
     color: '#FFF',

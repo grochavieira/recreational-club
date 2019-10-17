@@ -1,19 +1,27 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome5';
-import {
-  TextInput,
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {TextInput, View, StyleSheet, Text} from 'react-native';
 import Colors from '../constants/colors';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const Input = props => {
+const PasswordInput = props => {
   return (
     <View style={styles.principalContainer}>
-      <Text style={styles.inputTextTitle}>{props.inputTextTitle}</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignSelf: 'flex-start',
+        }}>
+        <Text style={styles.inputTextTitle}>{props.inputTextTitle}</Text>
+        <TouchableOpacity
+          style={{
+            marginLeft: 5,
+          }}
+          onPress={props.mostraSenha}>
+          <IconAwesome name={props.mudaOlho} size={17} color="#FFF" />
+        </TouchableOpacity>
+      </View>
       <View style={{...styles.inputContainer, ...props.style}}>
         <Icon name={props.nameIcon} size={24} color="#FFF" />
         <TextInput
@@ -67,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Input;
+export default PasswordInput;

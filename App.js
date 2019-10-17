@@ -1,6 +1,7 @@
 import LoginScreen from './screens/LoginScreen';
 import MainScreen from './screens/MainScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import RegisterEmployeeScreen from './screens/RegisterEmployeeScreen';
 import ListRegistersScreen from './screens/ListRegistersScreen';
 import UpdateRegistersScreen from './screens/UpdateRegistersScreen';
 import RemoveRegistersScreen from './screens/RemoveRegistersScreen';
@@ -15,6 +16,7 @@ let navegador = createStackNavigator(
     Login: {screen: LoginScreen},
     Main: {screen: MainScreen},
     Register: {screen: RegisterScreen},
+    RegisterEmployee: {screen: RegisterEmployeeScreen},
     ListRegisters: {screen: ListRegistersScreen},
     UpdateRegisters: {screen: UpdateRegistersScreen},
     RemoveRegisters: {screen: RemoveRegistersScreen},
@@ -23,6 +25,6 @@ let navegador = createStackNavigator(
   {headerMode: 'none'},
 );
 
-let App = createAppContainer(navegador);
+let App = createAppContainer(navegador, this.props);
 
 export default App;
