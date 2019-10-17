@@ -1,18 +1,20 @@
 import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../constants/colors';
-import Card from './../components/Card';
 import CardCommunity from './../components/CardCommunity';
 
 import Header from '../components/Header';
-class LoginScreen extends Component {
-  render() {
-    return (
-      <LinearGradient
-        colors={[Colors.primaria, Colors.secundaria]}
-        style={styles.cor}>
+
+export default function MainScreen(props) {
+  return (
+    <LinearGradient
+      colors={[Colors.primaria, Colors.secundaria]}
+      style={styles.cor}>
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1}}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.principalContainer}>
           <Header textHeader="Tela Principal" />
 
@@ -20,34 +22,35 @@ class LoginScreen extends Component {
             <CardCommunity
               iconName="account-plus"
               cardText="Cadastrar Associado"
-              action={() => this.props.navigation.push('Register')}
+              action={() => props.navigation.push('Register')}
             />
             <CardCommunity
               iconName="account-details"
               cardText="Listar Associados"
-              action={() => this.props.navigation.push('ListRegisters')}
+              action={() => props.navigation.push('ListRegisters')}
             />
             <CardCommunity
               iconName="account-edit"
               cardText="Atualizar Associados"
-              action={() => this.props.navigation.push('UpdateRegisters')}
+              action={() => props.navigation.push('UpdateRegisters')}
             />
             <CardCommunity
               iconName="account-remove"
               cardText="Remover Associados"
-              action={() => this.props.navigation.push('RemoveRegisters')}
+              action={() => props.navigation.push('RemoveRegisters')}
             />
             <CardCommunity
               iconName="information"
               cardText="Sobre"
-              action={() => this.props.navigation.push('About')}
+              action={() => props.navigation.push('About')}
             />
           </View>
         </View>
-      </LinearGradient>
-    );
-  }
+      </ScrollView>
+    </LinearGradient>
+  );
 }
+
 const styles = StyleSheet.create({
   principalContainer: {
     alignItems: 'center',
@@ -62,5 +65,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default LoginScreen;

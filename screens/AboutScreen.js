@@ -1,26 +1,19 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, ScrollView} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../constants/colors';
 import Header from '../components/Header';
 import IconAwesome from 'react-native-vector-icons/FontAwesome5';
 
-class AboutScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {date: ''};
-  }
-
-  selectDate = date => {
-    this.setState({date: date});
-  };
-
-  render() {
-    return (
-      <LinearGradient
-        colors={[Colors.primaria, Colors.secundaria]}
-        style={styles.cor}>
+export default function AboutScreen() {
+  return (
+    <LinearGradient
+      colors={[Colors.primaria, Colors.secundaria]}
+      style={styles.cor}>
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1}}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.principalContainer}>
           <Header textHeader="Sobre" />
           <View style={styles.aboutContainer}>
@@ -49,9 +42,9 @@ class AboutScreen extends Component {
             </View>
           </View>
         </View>
-      </LinearGradient>
-    );
-  }
+      </ScrollView>
+    </LinearGradient>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -106,5 +99,3 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
 });
-
-export default AboutScreen;

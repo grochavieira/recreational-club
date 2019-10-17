@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -6,7 +6,6 @@ import {
   CheckBox,
   Text,
   ScrollView,
-  SafeAreaView,
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,282 +13,346 @@ import LinearGradient from 'react-native-linear-gradient';
 import Colors from '../constants/colors';
 import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import IconAwesome from 'react-native-vector-icons/FontAwesome5';
 import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import Input from '../components/Input';
 import CustomButton from '../components/CustomButton';
 import Header from '../components/Header';
+import getRealm from '../services/realm';
 
-class RegisterScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      nome: '',
-      email: '',
-      telefone: '',
-      numDependentes: '',
-      sexo: '',
-      masculino: false,
-      feminino: false,
-      outros: false,
-      aniversario: '',
-      erroNome: '',
-      erroEmail: '',
-      erroTelefone: '',
-      erroNumDependentes: '',
-      erroSexo: '',
-      erroAniversario: '',
-    };
-  }
+export default function RegisterScreen() {
+  const [dadosCliente, setDadosCliente] = useState({
+    id: 0,
+    nome: '',
+    email: '',
+    telefone: '',
+    numDependentes: '',
+    aniversario: '',
+    sexo: '',
+    masculino: false,
+    feminino: false,
+    outros: false,
+  });
 
-  getNome = nome => {
-    this.setState({nome: nome});
-    if (nome.length > 0) {
-      this.setState({erroNome: ' '});
+  const [erro, setErro] = useState({
+    inputNome: '',
+    inputEmail: '',
+    inputTelefone: '',
+    inputNumDependentes: '',
+    inputAniversario: '',
+    inputSexo: '',
+  });
+
+  const [cadastros, setCadastros] = useState([]);
+
+  let clienteId = 0;
+
+  useEffect(() => {
+    async function carregaCadastros() {
+      const realm = await getRealm();
+
+      const dados = realm.objects('Client').sorted('id', false);
+
+      setCadastros(dados);
+    }
+
+    carregaCadastros();
+  }, []);
+
+  const clickNome = nome => {
+    setDadosCliente({...dadosCliente, nome: nome});
+    if (nome != '') {
+      setErro({...erro, inputNome: ''});
     }
   };
 
-  getMail = email => {
-    this.setState({email: email});
-    if (email.length > 0) {
-      this.setState({erroEmail: ' '});
+  const clickEmail = email => {
+    setDadosCliente({...dadosCliente, email: email});
+    if (email != '') {
+      setErro({...erro, inputEmail: ''});
     }
   };
 
-  getPhone = telefone => {
-    this.setState({telefone: telefone});
+  const clickTelefone = telefone => {
+    setDadosCliente({...dadosCliente, telefone: telefone});
     if (telefone.length === 11) {
-      this.setState({erroTelefone: ' '});
+      setErro({...erro, inputTelefone: ''});
     }
   };
 
-  getNumDependentes = numDependentes => {
-    this.setState({numDependentes: numDependentes});
-    if (numDependentes.length > 0) {
-      this.setState({erroNumDependentes: ' '});
+  const clickNumDependentes = numDependentes => {
+    setDadosCliente({...dadosCliente, numDependentes: numDependentes});
+    if (numDependentes != '') {
+      setErro({...erro, inputNumDependentes: ''});
     }
   };
 
-  selectDate = aniversario => {
-    this.setState({aniversario: aniversario});
-    if (aniversario.lenght > 0) {
-      this.setState({erroAniversario: ' '});
+  const clickAniversario = aniversario => {
+    setDadosCliente({...dadosCliente, aniversario: aniversario});
+    if (aniversario != '') {
+      setErro({...erro, inputAniversario: ''});
     }
   };
 
-  checkBoxMasculino() {
-    this.setState({
-      masculino: !this.state.masculino,
+  const clickMale = () => {
+    setDadosCliente({
+      ...dadosCliente,
+      masculino: !dadosCliente.masculino,
       feminino: false,
       outros: false,
     });
-    this.setState({erroSexo: ' '});
-  }
+    setErro({...erro, inputSexo: ''});
+  };
 
-  checkBoxFeminino() {
-    this.setState({
-      feminino: !this.state.feminino,
+  const clickFemale = () => {
+    setDadosCliente({
+      ...dadosCliente,
       masculino: false,
+      feminino: !dadosCliente.feminino,
       outros: false,
     });
-    this.setState({erroSexo: ' '});
-  }
+    setErro({...erro, inputSexo: ''});
+  };
 
-  checkBoxOutros() {
-    this.setState({
-      feminino: false,
+  const clickOthers = () => {
+    setDadosCliente({
+      ...dadosCliente,
       masculino: false,
-      outros: !this.state.outros,
+      feminino: false,
+      outros: !dadosCliente.outros,
     });
-    this.setState({erroSexo: ' '});
-  }
+    setErro({...erro, inputSexo: ''});
+  };
 
-  saveClientRegister() {
-    const dados = {
-      id: 1,
-      nomeCompleto: this.state.nome,
-      telefone: this.state.telefone,
-      numDependentes: this.state.numDependentes,
-      sexo: this.state.sexo,
-      aniversario: this.state.aniversario,
+  async function guardaCadastro() {
+    dados = {
+      id: clienteId,
+      nomeCompleto: dadosCliente.nome,
+      email: dadosCliente.email,
+      telefone: dadosCliente.telefone,
+      numDependentes: dadosCliente.numDependentes,
+      aniversario: dadosCliente.aniversario,
+      sexo: dadosCliente.sexo,
     };
+
+    const realm = await getRealm();
+
+    realm.write(() => {
+      realm.create('Client', dados);
+    });
   }
 
-  Cadastra = () => {
+  async function cadastra() {
     let verificaErros = 0;
-    if (this.state.nome === '') {
+    let mensagemErro = [];
+
+    if (dadosCliente.nome === '') {
       verificaErros++;
-      this.setState({erroNome: '*Campo Inserido Incorretamente'});
+      mensagemErro[0] = '*Favor preencher campo';
+    } else {
+      mensagemErro[0] = '';
     }
 
-    if (this.state.email === '') {
+    if (dadosCliente.email === '') {
       verificaErros++;
-      this.setState({erroEmail: '*Campo Inserido Incorretamente'});
+      mensagemErro[1] = '*Favor preencher campo';
+    } else {
+      mensagemErro[1] = '';
     }
 
-    if (this.state.telefone.length < 11) {
+    if (dadosCliente.telefone.length < 11) {
       verificaErros++;
-      this.setState({erroTelefone: '*Campo Inserido Incorretamente'});
+      mensagemErro[2] = '*Campo inserido incorretamente';
+    } else {
+      mensagemErro[2] = '';
     }
 
-    if (this.state.numDependentes === '') {
+    if (dadosCliente.numDependentes === '') {
       verificaErros++;
-      this.setState({erroNumDependentes: '*Campo Inserido Incorretamente'});
+      mensagemErro[3] = '*Favor preencher campo';
+    } else {
+      mensagemErro[3] = '';
     }
 
-    if (this.state.aniversario === '') {
+    if (dadosCliente.aniversario === '') {
       verificaErros++;
-      this.setState({erroAniversario: '*Campo Inserido Incorretamente'});
+      mensagemErro[4] = '*Favor preencher campo';
+    } else {
+      mensagemErro[4] = '';
     }
 
     if (
-      this.state.masculino === false &&
-      this.state.feminino === false &&
-      this.state.outros === false
+      dadosCliente.masculino === false &&
+      dadosCliente.feminino === false &&
+      dadosCliente.outros === false
     ) {
       verificaErros++;
-      this.setState({erroSexo: '*Escolha uma das opções'});
-    } else if (this.state.masculino === true) {
-      sexo = 'Masculino';
-    } else if (this.state.feminino === true) {
-      sexo = 'Feminino';
+      mensagemErro[5] = '*Escolha uma das opções';
+    } else if (dadosCliente.masculino === true) {
+      dadosCliente.sexo = 'Masculino';
+      mensagemErro[5] = '';
+    } else if (dadosCliente.feminino === true) {
+      dadosCliente.sexo = 'Feminino';
+      mensagemErro[5] = '';
     } else {
-      sexo = 'Outros';
+      dadosCliente.sexo = 'Outros';
+      mensagemErro[5] = '';
     }
 
+    setErro({
+      ...erro,
+      inputNome: mensagemErro[0],
+      inputEmail: mensagemErro[1],
+      inputTelefone: mensagemErro[2],
+      inputNumDependentes: mensagemErro[3],
+      inputAniversario: mensagemErro[4],
+      inputSexo: mensagemErro[5],
+    });
     if (verificaErros === 0) {
+      cadastros.map(item => (clienteId = item.id + 1));
+      await guardaCadastro();
       Alert.alert('Cadastro realizado com sucesso!');
+      setDadosFuncionario({});
     } else {
       Alert.alert('Não foi possível realizar o cadastro!');
     }
-  };
+  }
 
-  render() {
-    return (
-      <LinearGradient
-        colors={[Colors.primaria, Colors.secundaria]}
-        style={styles.cor}>
-        <ScrollView
-          contentContainerStyle={{flexGrow: 1}}
-          showsVerticalScrollIndicator={false}>
-          <View style={styles.principalContainer}>
-            <Header textHeader="Cadastrar Associado" />
+  return (
+    <LinearGradient
+      colors={[Colors.primaria, Colors.secundaria]}
+      style={styles.cor}>
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1}}
+        showsVerticalScrollIndicator={false}>
+        <View style={styles.principalContainer}>
+          <Header textHeader="Cadastro de Associados" />
 
-            <View style={styles.principalInputContainer}>
-              <Input
-                nameIcon="person"
-                textPlaceHolder="Nome Completo"
-                length={30}
-                onChange={this.getNome}
-                inputErrorText={this.state.erroNome}
-              />
-              <Input
-                nameIcon="email"
-                textPlaceHolder="Email"
-                length={30}
-                onChange={this.getMail}
-                inputErrorText={this.state.erroEmail}
-              />
-              <Input
-                nameIcon="phone"
-                textPlaceHolder="Telefone"
-                keyboard="numeric"
-                length={11}
-                onChange={this.getPhone}
-                inputErrorText={this.state.erroTelefone}
-              />
-              <Input
-                nameIcon="people"
-                textPlaceHolder="Número de Dependentes"
-                keyboard="numeric"
-                length={2}
-                onChange={this.getNumDependentes}
-                inputErrorText={this.state.erroNumDependentes}
-              />
+          <View style={styles.principalInputContainer}>
+            <Input
+              nameIcon="person"
+              textPlaceHolder="Digite o nome completo"
+              length={30}
+              value={dadosCliente.nome}
+              onChange={clickNome}
+              inputErrorText={erro.inputNome}
+              inputTextTitle="NOME"
+            />
+            <Input
+              nameIcon="email"
+              textPlaceHolder="Digite o endereço de email"
+              length={30}
+              value={dadosCliente.email}
+              onChange={clickEmail}
+              inputErrorText={erro.inputEmail}
+              inputTextTitle="EMAIL"
+            />
+            <Input
+              nameIcon="phone"
+              textPlaceHolder="Digite o número de tel./cel."
+              keyboard="numeric"
+              length={11}
+              value={dadosCliente.telefone}
+              onChange={clickTelefone}
+              inputErrorText={erro.inputTelefone}
+              inputTextTitle="TELEFONE/CELULAR"
+            />
+            <Input
+              nameIcon="people"
+              textPlaceHolder="Marido, esposa, filhos(as), etc..."
+              keyboard="numeric"
+              length={2}
+              value={dadosCliente.numDependentes}
+              onChange={clickNumDependentes}
+              inputErrorText={erro.inputNumDependentes}
+              inputTextTitle="NÚMERO DE DEPENDENTES"
+            />
 
-              <View style={styles.principalDatePickerContainer}>
-                <View style={styles.datePickerContainer}>
-                  <Icon name="date-range" size={24} color="#FFF" />
-                  <DatePicker
-                    style={{width: '100%'}}
-                    date={this.state.aniversario}
-                    placeholder="Data de Aniversário"
-                    format="DD-MM-YYYY"
-                    minDate="01-01-1910"
-                    maxDate="31-12-2001"
-                    showIcon={false}
-                    onDateChange={this.selectDate}
-                    customStyles={{
-                      dateText: {
-                        fontSize: 16,
-                        color: 'white',
-                        alignSelf: 'flex-start',
-                        marginHorizontal: 5,
-                      },
-                      dateInput: {
-                        borderWidth: 0,
-                      },
-                      placeholderText: {
-                        fontSize: 16,
-                        color: 'rgba(255,255,255,0.7)',
-                        alignSelf: 'flex-start',
-                        marginLeft: 5,
-                      },
-                    }}
-                  />
-                </View>
-                <Text style={styles.errorText}>
-                  {this.state.erroAniversario}
-                </Text>
+            <View style={styles.principalDatePickerContainer}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: '#FFF',
+                  fontWeight: 'bold',
+                  alignSelf: 'flex-start',
+                }}>
+                DATA DE ANIVERSÁRIO
+              </Text>
+              <View style={styles.datePickerContainer}>
+                <Icon name="date-range" size={24} color="#FFF" />
+                <DatePicker
+                  style={{width: '100%'}}
+                  date={dadosCliente.aniversario}
+                  placeholder="Escolha a data de aniversário"
+                  format="DD-MM-YYYY"
+                  minDate="01-01-1910"
+                  maxDate="31-12-2001"
+                  showIcon={false}
+                  onDateChange={clickAniversario}
+                  customStyles={{
+                    dateText: {
+                      fontSize: 16,
+                      color: 'white',
+                      alignSelf: 'flex-start',
+                      marginHorizontal: 5,
+                    },
+                    dateInput: {
+                      borderWidth: 0,
+                    },
+                    placeholderText: {
+                      fontSize: 16,
+                      color: 'rgba(255,255,255,0.7)',
+                      alignSelf: 'flex-start',
+                      marginLeft: 5,
+                    },
+                  }}
+                />
               </View>
-
-              <View style={styles.principalGenderContainer}>
-                <View style={styles.genderContainer}>
-                  <View style={styles.genderHeader}>
-                    <IconCommunity
-                      name="human-male-female"
-                      size={24}
-                      color="#FFF"
-                    />
-                    <Text style={styles.textGenderHeader}>Sexo: </Text>
-                  </View>
-                  <View>
-                    <View style={styles.maleContainer}>
-                      <CheckBox
-                        value={this.state.masculino}
-                        onChange={() => this.checkBoxMasculino()}
-                      />
-                      <Text style={styles.textGenders}>Masculino</Text>
-                    </View>
-                    <View style={styles.femaleContainer}>
-                      <CheckBox
-                        value={this.state.feminino}
-                        onChange={() => this.checkBoxFeminino()}
-                      />
-                      <Text style={styles.textGenders}>Feminino</Text>
-                    </View>
-                    <View style={styles.othersContainer}>
-                      <CheckBox
-                        value={this.state.outros}
-                        onChange={() => this.checkBoxOutros()}
-                      />
-                      <Text style={styles.textGenders}>Outros</Text>
-                    </View>
-                  </View>
-                </View>
-                <Text style={styles.errorText}>{this.state.erroSexo}</Text>
-              </View>
+              <Text style={styles.errorText}>{erro.inputAniversario}</Text>
             </View>
 
-            <CustomButton
-              textButton="CADASTRAR"
-              confirm={() => this.Cadastra()}
-            />
+            <View style={styles.principalGenderContainer}>
+              <View style={styles.genderContainer}>
+                <View style={styles.genderHeader}>
+                  <IconCommunity
+                    name="human-male-female"
+                    size={24}
+                    color="#FFF"
+                  />
+                  <Text style={styles.textGenderHeader}>SEXO: </Text>
+                </View>
+                <View>
+                  <View style={styles.maleContainer}>
+                    <CheckBox
+                      value={dadosCliente.masculino}
+                      onChange={clickMale}
+                    />
+                    <Text style={styles.textGenders}>Masculino</Text>
+                  </View>
+                  <View style={styles.femaleContainer}>
+                    <CheckBox
+                      value={dadosCliente.feminino}
+                      onChange={clickFemale}
+                    />
+                    <Text style={styles.textGenders}>Feminino</Text>
+                  </View>
+                  <View style={styles.othersContainer}>
+                    <CheckBox
+                      value={dadosCliente.outros}
+                      onChange={clickOthers}
+                    />
+                    <Text style={styles.textGenders}>Outros</Text>
+                  </View>
+                </View>
+              </View>
+              <Text style={styles.errorText}>{erro.inputSexo}</Text>
+            </View>
           </View>
-        </ScrollView>
-      </LinearGradient>
-    );
-  }
+
+          <CustomButton textButton="CADASTRAR" confirm={cadastra} />
+        </View>
+      </ScrollView>
+    </LinearGradient>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -337,14 +400,15 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   textGenders: {
-    color: '#FFF',
+    color: 'rgba(255,255,255,0.7)',
     fontSize: 16,
     margin: 5,
   },
   textGenderHeader: {
-    color: 'rgba(255,255,255,0.7)',
-    fontSize: 16,
+    color: '#FFF',
+    fontSize: 12,
     margin: 5,
+    fontWeight: 'bold',
   },
   genderHeader: {
     margin: 5,
@@ -366,5 +430,3 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-
-export default RegisterScreen;

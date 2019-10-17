@@ -8,7 +8,9 @@ const CustomButton = props => {
     <TouchableOpacity
       style={{...styles.buttonContainer, ...props.style}}
       onPress={props.confirm}>
-      <Text style={{...styles.buttonText}}>{props.textButton}</Text>
+      <Text style={{...styles.buttonText, ...props.style}}>
+        {props.textButton}
+      </Text>
     </TouchableOpacity>
   );
 };
