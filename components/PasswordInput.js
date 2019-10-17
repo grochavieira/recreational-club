@@ -8,7 +8,20 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const PasswordInput = props => {
   return (
     <View style={styles.principalContainer}>
-      <Text style={styles.inputTextTitle}>{props.inputTextTitle}</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignSelf: 'flex-start',
+        }}>
+        <Text style={styles.inputTextTitle}>{props.inputTextTitle}</Text>
+        <TouchableOpacity
+          style={{
+            marginLeft: 5,
+          }}
+          onPress={props.mostraSenha}>
+          <IconAwesome name={props.mudaOlho} size={17} color="#FFF" />
+        </TouchableOpacity>
+      </View>
       <View style={{...styles.inputContainer, ...props.style}}>
         <Icon name={props.nameIcon} size={24} color="#FFF" />
         <TextInput
@@ -22,11 +35,6 @@ const PasswordInput = props => {
           value={props.value}
           onChangeText={props.onChange}
         />
-        <TouchableOpacity
-          style={{marginRight: 5, marginBottom: 5}}
-          onPress={props.mostraSenha}>
-          <IconAwesome name={props.mudaOlho} size={20} color="#FFF" />
-        </TouchableOpacity>
       </View>
       <Text style={styles.errorText}>{props.inputErrorText}</Text>
     </View>
@@ -35,7 +43,7 @@ const PasswordInput = props => {
 
 const styles = StyleSheet.create({
   input: {
-    width: '90%',
+    width: '100%',
     color: '#FFF',
     fontSize: 16,
   },

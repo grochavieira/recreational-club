@@ -1,6 +1,13 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {TextInput, View, StyleSheet, Text} from 'react-native';
+import IconAwesome from 'react-native-vector-icons/FontAwesome5';
+import {
+  TextInput,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import Colors from '../constants/colors';
 
 const Input = props => {
