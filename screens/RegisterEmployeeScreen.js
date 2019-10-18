@@ -40,17 +40,17 @@ export default function RegisterScreen(props) {
   });
 
   const [mostraSenha, setMostraSenha] = useState({
-    olho: 'eye',
+    olho: 'eye-slash',
     senha: true,
   });
 
   const [mostraConfirmarSenha, setMostraConfirmarSenha] = useState({
-    olho: 'eye',
+    olho: 'eye-slash',
     senha: true,
   });
 
   const [mostraChave, setMostraChave] = useState({
-    olho: 'eye',
+    olho: 'eye-slash',
     senha: true,
   });
 
@@ -120,26 +120,26 @@ export default function RegisterScreen(props) {
   };
 
   function clickEyeSenha() {
-    if (mostraSenha.olho === 'eye') {
-      setMostraSenha({olho: 'eye-slash', senha: false});
+    if (mostraSenha.olho === 'eye-slash') {
+      setMostraSenha({olho: 'eye', senha: false});
     } else {
-      setMostraSenha({olho: 'eye', senha: true});
+      setMostraSenha({olho: 'eye-slash', senha: true});
     }
   }
 
   function clickEyeConfirmarSenha() {
-    if (mostraConfirmarSenha.olho === 'eye') {
-      setMostraConfirmarSenha({olho: 'eye-slash', senha: false});
+    if (mostraConfirmarSenha.olho === 'eye-slash') {
+      setMostraConfirmarSenha({olho: 'eye', senha: false});
     } else {
-      setMostraConfirmarSenha({olho: 'eye', senha: true});
+      setMostraConfirmarSenha({olho: 'eye-slash', senha: true});
     }
   }
 
   function clickEyeChave() {
-    if (mostraChave.olho === 'eye') {
-      setMostraChave({olho: 'eye-slash', senha: false});
+    if (mostraChave.olho === 'eye-slash') {
+      setMostraChave({olho: 'eye', senha: false});
     } else {
-      setMostraChave({olho: 'eye', senha: true});
+      setMostraChave({olho: 'eye-slash', senha: true});
     }
   }
 

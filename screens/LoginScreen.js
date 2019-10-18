@@ -17,7 +17,7 @@ export default function LoginScreen(props) {
   });
 
   const [mostraSenha, setMostraSenha] = useState({
-    olho: 'eye',
+    olho: 'eye-slash',
     senha: true,
   });
 
@@ -52,10 +52,10 @@ export default function LoginScreen(props) {
   };
 
   function clickEye() {
-    if (mostraSenha.olho === 'eye') {
-      setMostraSenha({olho: 'eye-slash', senha: false});
+    if (mostraSenha.olho === 'eye-slash') {
+      setMostraSenha({olho: 'eye', senha: false});
     } else {
-      setMostraSenha({olho: 'eye', senha: true});
+      setMostraSenha({olho: 'eye-slash', senha: true});
     }
   }
 
