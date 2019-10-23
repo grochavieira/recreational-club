@@ -18,3 +18,20 @@ E se o usuário existe, ele verifica se a senha está correta e vai para a tela 
 <p align="center">
   <img src="imagensREADME/telaLoginErroSenha.PNG">
 </p>
+
+## Tela de Cadastro de Funcionário
+
+Essa tela é utilizada para cadastrar novos funcionários, caso eles não tenham seu registro no banco ainda.
+
+<p align="center">
+  <img width="250" height="400" src="imagensREADME/telaCadastroFuncionario1.png">
+  <img width="250" height="400" src="imagensREADME/telaCadastroFuncionario2.png">
+</p>
+
+Ela também verifica erros de input do usuário antes de cadastrá-lo.
+
+## Tela de Recuperar Senha
+
+<p align="center">
+  <img src="imagensREADME/telaEsqueceuSenha.png">
+</p>
