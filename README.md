@@ -79,3 +79,35 @@ Ele também faz a verificação de dados antes de realizar o cadastro do associa
   <img width="300" height="500" src="imagensREADME/telaCadastroAssociadoErro1.png">
   <img width="300" height="500" src="imagensREADME/telaCadastroAssociadoErro2.png">
 </p>
+
+## Tela de Listar Associados
+
+Essa tela faz a listagem dos associados cadastrados no clube.
+
+<p align="center">
+  <img src="imagensREADME/telaListaAssociado.png">
+</p>
+
+Também é possível pesquisar pelo nome dos associados existentes para mostrar na listagem, além de listar todos que já existem clicando no botão "LISTAR TODOS OS ASSOCIADOS".
+
+<p align="center">
+  <img src="imagensREADME/telaAtualizaAssociadoPesquisando.png">
+</p>
+
+## Tela de Atualizar Associados
+
+<p align="center">
+  <img src="imagensREADME/telaAtualizaAssociado.png">
+</p>
+
+## Tela de Editar Associados
+
+## Tela de Remover Associados
+
+## Tela Sobre
+
+Essa tela contém a informação sobre os desenvolvedores e a versão do projeto.
+
+<p align="center">
+  <img src="imagensREADME/telaSobre.png">
+</p>
