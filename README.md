@@ -121,6 +121,22 @@ E ao atualizar ele volta para a tela de atualizar e lista novamente todos os cad
 
 Essa tela remove os dados dos associados que foram cadastrados, além de pesquisar e listar os cadastros existentes, assim como a tela de listar e atualizar.
 
+<p align="center">
+  <img src="imagensREADME/telaRemoveAssociado1.png">
+</p>
+
+Ao clicar no botão "REMOVER", ela mostra uma mensagem de confirmação para deletar o cadastro. Clicando em SIM, ele deleta o cadastro, e em NÃO ele cancela a exclusão.
+
+<p align="center">
+  <img src="imagensREADME/telaRemoveAssociado2.png">
+</p>
+
+Assim o cadastro é excluido.
+
+<p align="center">
+  <img src="imagensREADME/telaRemoveAssociado3.png">
+</p>
+
 ## Tela Sobre
 
 Essa tela contém a informação sobre os desenvolvedores e a versão do projeto.
