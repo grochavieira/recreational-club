@@ -107,11 +107,19 @@ Essa tela é utilizada para atualizar o cadastro dos associados, além de ser ca
 Essa tela atualiza os dados que foram mandados da tela de atualizar associados, além de poder atualizar o número de visitas do associado.
 
 <p align="center">
-  <img width="300" height="500" src="imagensREADME/telaCadastroAssociadoErro1.png">
-  <img width="300" height="500" src="imagensREADME/telaCadastroAssociadoErro2.png">
+  <img width="300" height="500" src="imagensREADME/telaEditaAssociado1.png">
+  <img width="300" height="500" src="imagensREADME/telaEditaAssociado2.png">
+</p>
+
+E ao atualizar ele volta para a tela de atualizar e lista novamente todos os cadastros.
+
+<p align="center">
+  <img src="imagensREADME/telaCadastroAtualizado.png">
 </p>
 
 ## Tela de Remover Associados
+
+Essa tela remove os dados dos associados que foram cadastrados, além de pesquisar e listar os cadastros existentes, assim como a tela de listar e atualizar.
 
 ## Tela Sobre
 
