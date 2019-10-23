@@ -91,16 +91,25 @@ Essa tela faz a listagem dos associados cadastrados no clube.
 Também é possível pesquisar pelo nome dos associados existentes para mostrar na listagem, além de listar todos que já existem clicando no botão "LISTAR TODOS OS ASSOCIADOS".
 
 <p align="center">
-  <img src="imagensREADME/telaAtualizaAssociadoPesquisando.png">
+  <img src="imagensREADME/telaListaAssociadoPesquisando.png">
 </p>
 
 ## Tela de Atualizar Associados
+
+Essa tela é utilizada para atualizar o cadastro dos associados, além de ser capaz de pesquisar e listar os associados, assim como na tela de listar associados, e para atualizar os dados, basta clicar no botão "ATUALIZAR" do cadastro desejado, mandando esses dados para serem editados na tela de editar associados.
 
 <p align="center">
   <img src="imagensREADME/telaAtualizaAssociado.png">
 </p>
 
 ## Tela de Editar Associados
+
+Essa tela atualiza os dados que foram mandados da tela de atualizar associados, além de poder atualizar o número de visitas do associado.
+
+<p align="center">
+  <img width="300" height="500" src="imagensREADME/telaCadastroAssociadoErro1.png">
+  <img width="300" height="500" src="imagensREADME/telaCadastroAssociadoErro2.png">
+</p>
 
 ## Tela de Remover Associados
 
