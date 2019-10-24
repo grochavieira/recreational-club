@@ -18,7 +18,7 @@ const Header = props => {
 const styles = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
-    marginVertical: 50,
+    marginVertical: 40,
   },
   headerText: {
     color: '#FFF',

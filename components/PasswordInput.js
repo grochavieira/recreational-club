@@ -2,7 +2,6 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome5';
 import {TextInput, View, StyleSheet, Text} from 'react-native';
-import Colors from '../constants/colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const PasswordInput = props => {
