@@ -1,5 +1,5 @@
-import React, {Component, useEffect, useState} from 'react';
-import {View, StyleSheet, Alert, FlatList, Button} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Alert, FlatList} from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 import FlatListItem from '../components/FlatListItem';
@@ -9,10 +9,11 @@ import getRealm from '../services/realm';
 import Search from '../components/Search';
 
 export default function RegisterScreen(props) {
-  const [cadastros, setCadastros] = useState([]);
-  const [refresh, setRefresh] = useState(false);
-  const [nomeAssociado, setNomeAssociado] = useState('');
+  const [cadastros, setCadastros] = useState([]); // Guarda os dados de cadastro do associado
+  const [refresh, setRefresh] = useState(false); // Variavel para atualizar a FlatList
+  const [nomeAssociado, setNomeAssociado] = useState(''); // Pega o input do nome para pesquisar os cadastros de associado
 
+  // Pega os cadastros de associados no banco de dados
   async function carregaCadastros() {
     const realm = await getRealm();
 
@@ -21,10 +22,12 @@ export default function RegisterScreen(props) {
     setCadastros(dados);
   }
 
+  // Roda uma vez quando entra nessa tela
   useEffect(() => {
     carregaCadastros();
   }, []);
 
+  // Manda os dados a serem atualizados do associado escolhido para a tela de editar cadastros
   function atualiza(idAssociado) {
     let dadosAssociado = {};
     cadastros.map(dados => {
@@ -35,7 +38,7 @@ export default function RegisterScreen(props) {
           email: dados.email,
           telefone: dados.telefone,
           numDependentes: dados.numDependentes,
-          aniversario: dados.aniversario,
+          nascimento: dados.nascimento,
           sexo: dados.sexo,
           numVisitas: dados.numVisitas,
         };
@@ -49,19 +52,22 @@ export default function RegisterScreen(props) {
     });
   }
 
+  // Busca por um associado por meio do seu nome e atualiza a FlatList se esse associado existir
   async function buscaAssociado() {
-    const realm = await getRealm();
+    const realm = await getRealm(); // Pega o banco de dados
     const dadosFiltrados = realm
       .objects('Associate')
-      .filtered(`nomeCompleto == "${nomeAssociado}"`);
+      .filtered(`nomeCompleto == "${nomeAssociado}"`); // Filtra o banco para achar associados com esse nome
     if (dadosFiltrados.length === 0) {
+      // Verifica se existem associados com esse nome
       Alert.alert('Esse nome não existe!');
     } else {
-      setCadastros(dadosFiltrados);
-      setRefresh(!refresh);
+      setCadastros(dadosFiltrados); // Atualiza cadastros que está ligada à FlatList
+      setRefresh(!refresh); // Atualiza a própria FlatList
     }
   }
 
+  // Busca todos os cadastros do banco e atualiza a FlatList
   async function listaTodosAssociados() {
     const realm = await getRealm();
     const todosAssociados = realm.objects('Associate').sorted('id', false);
@@ -91,21 +97,25 @@ export default function RegisterScreen(props) {
           contentContainerStyle={{flexGrow: 1}}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => item.id.toString()}
-          data={cadastros}
-          extraData={refresh}
+          data={
+            cadastros
+          } /* Dados que serão destrinchados e renderizados na FlatList*/
+          extraData={
+            refresh
+          } /* Variável que atualiza a FlatList quando alterada */
           renderItem={itemData => (
             <FlatListItem
               key={itemData.item.id}
-              id={itemData.item.id}
+              idAssociado={itemData.item.id}
               nomeAssociado={itemData.item.nomeCompleto}
               emailAssociado={itemData.item.email}
               telefoneAssociado={itemData.item.telefone}
-              aniversarioAssociado={itemData.item.aniversario}
+              nascimentoAssociado={itemData.item.nascimento}
               sexoAssociado={itemData.item.sexo}
               numDependentesAssociado={itemData.item.numDependentes}
               visitasAssociado={itemData.item.numVisitas}
               nomeBotao="ATUALIZAR"
-              nomeIcone="update"
+              nomeIcone="refresh"
               iconColor={Colors.primaria}
               onAction={atualiza}
             />

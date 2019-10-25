@@ -1,3 +1,4 @@
+// Tabela dos funcionários
 export default class EmployeeSchema {
   static schema = {
     name: 'Employee',

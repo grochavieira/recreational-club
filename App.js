@@ -1,3 +1,6 @@
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+
 import LoginScreen from './screens/LoginScreen';
 import MainScreen from './screens/MainScreen';
 import RegisterScreen from './screens/RegisterScreen';
@@ -6,21 +9,21 @@ import ListRegistersScreen from './screens/ListRegistersScreen';
 import UpdateRegistersScreen from './screens/UpdateRegistersScreen';
 import RemoveRegistersScreen from './screens/RemoveRegistersScreen';
 import AboutScreen from './screens/AboutScreen';
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
+import EditRegisterScreen from './screens/EditRegisterScreen';
 
-import {createAppContainer} from 'react-navigation'; //o próprio navegador
-import {createStackNavigator} from 'react-navigation-stack'; //empacota o navegador
-
-//o primeiro parâmetro mapeia um link para as paginas
 let navegador = createStackNavigator(
   {
     Login: {screen: LoginScreen},
+    UpdateRegisters: {screen: UpdateRegistersScreen},
     Main: {screen: MainScreen},
+    EditRegister: {screen: EditRegisterScreen},
     Register: {screen: RegisterScreen},
     RegisterEmployee: {screen: RegisterEmployeeScreen},
     ListRegisters: {screen: ListRegistersScreen},
-    UpdateRegisters: {screen: UpdateRegistersScreen},
     RemoveRegisters: {screen: RemoveRegistersScreen},
     About: {screen: AboutScreen},
+    ForgotPassword: {screen: ForgotPasswordScreen},
   },
   {headerMode: 'none'},
 );

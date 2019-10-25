@@ -7,15 +7,14 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-
 import LinearGradient from 'react-native-linear-gradient';
-
-import Colors from '../constants/colors';
 import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome5';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
+
+import Colors from '../constants/colors';
 import Input from '../components/Input';
 import CustomButton from '../components/CustomButton';
 import Header from '../components/Header';
@@ -23,13 +22,16 @@ import getRealm from '../services/realm';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default function EditRegisterScreen(props) {
+  /* Guarda os dados que vieram da tela de Atualizar Associados e manda
+   * eles para os inputs poderem ser modificados
+   */
   const [dadosAssociado, setDadosAssociado] = useState({
     id: props.navigation.getParam('dadosAssociado').id,
     nome: props.navigation.getParam('dadosAssociado').nome,
     email: props.navigation.getParam('dadosAssociado').email,
     telefone: props.navigation.getParam('dadosAssociado').telefone,
     numDependentes: props.navigation.getParam('dadosAssociado').numDependentes,
-    aniversario: props.navigation.getParam('dadosAssociado').aniversario,
+    nascimento: props.navigation.getParam('dadosAssociado').nascimento,
     sexo: props.navigation.getParam('dadosAssociado').sexo,
     numVisitas: props.navigation.getParam('dadosAssociado').numVisitas,
     masculino: false,
@@ -37,17 +39,20 @@ export default function EditRegisterScreen(props) {
     outros: false,
   });
 
+  // Guarda as mensagens de erro para os inputs digitados incorretamente
   const [erro, setErro] = useState({
     inputNome: '',
     inputEmail: '',
     inputTelefone: '',
     inputNumDependentes: '',
-    inputAniversario: '',
+    inputNascimento: '',
     inputSexo: '',
   });
 
+  // Guarda os cadastros do banco de dados
   const [cadastros, setCadastros] = useState([]);
 
+  // Roda na primeira vez que entra nessa tela
   useEffect(() => {
     async function carregaCadastros() {
       const realm = await getRealm();
@@ -66,6 +71,9 @@ export default function EditRegisterScreen(props) {
     }
   }, []);
 
+  /* Pega os valores dos inputs digitados e apaga as mensagens
+   * de erro quando as condições necessárias são alcançadas
+   */
   const changeNome = nome => {
     setDadosAssociado({...dadosAssociado, nome: nome});
     if (nome != '') {
@@ -80,6 +88,7 @@ export default function EditRegisterScreen(props) {
     }
   };
 
+  // Aqui também impede que o usuário digite qualquer coisa que não seja números
   const changeTelefone = telefone => {
     let novoTexto = '';
     let numeros = '0123456789';
@@ -113,13 +122,26 @@ export default function EditRegisterScreen(props) {
     }
   };
 
-  const changeAniversario = aniversario => {
-    setDadosAssociado({...dadosAssociado, aniversario: aniversario});
-    if (aniversario != '') {
-      setErro({...erro, inputAniversario: ''});
+  const changeNascimento = nascimento => {
+    setDadosAssociado({...dadosAssociado, nascimento: nascimento});
+    if (nascimento != '') {
+      setErro({...erro, inputNascimento: ''});
     }
   };
 
+  const diminuiNumVisitas = () => {
+    if (dadosAssociado.numVisitas - 1 < 0) {
+      setDadosAssociado({...dadosAssociado, numVisitas: 0});
+      Alert.alert('Não é possível decrementar mais!');
+    } else {
+      setDadosAssociado({
+        ...dadosAssociado,
+        numVisitas: dadosAssociado.numVisitas - 1,
+      });
+    }
+  };
+
+  // Muda a condição da checkbox quando o usuário clica nas caixinhas de escolha
   const changeMale = () => {
     setDadosAssociado({
       ...dadosAssociado,
@@ -150,14 +172,15 @@ export default function EditRegisterScreen(props) {
     setErro({...erro, inputSexo: ''});
   };
 
-  async function guardaCadastro() {
+  // Pega os dados de cadastro depois de verificados e atualiza o banco
+  async function atualizaCadastro() {
     dados = {
       id: dadosAssociado.id,
       nomeCompleto: dadosAssociado.nome,
       email: dadosAssociado.email,
       telefone: dadosAssociado.telefone,
       numDependentes: dadosAssociado.numDependentes,
-      aniversario: dadosAssociado.aniversario,
+      nascimento: dadosAssociado.nascimento,
       sexo: dadosAssociado.sexo,
       numVisitas: dadosAssociado.numVisitas,
     };
@@ -165,22 +188,14 @@ export default function EditRegisterScreen(props) {
     const realm = await getRealm();
 
     realm.write(() => {
+      /* A condição true indica que se existir um dado
+       * com a mesma chave primária (id), ele será substituido
+       */
       realm.create('Associate', dados, true);
     });
   }
 
-  const diminuiNumVisitas = () => {
-    if (dadosAssociado.numVisitas - 1 < 0) {
-      setDadosAssociado({...dadosAssociado, numVisitas: 0});
-      Alert.alert('Não é possível decrementar mais!');
-    } else {
-      setDadosAssociado({
-        ...dadosAssociado,
-        numVisitas: dadosAssociado.numVisitas - 1,
-      });
-    }
-  };
-
+  // Valida os dados a serem atualizados e atualiza se estiverem corretos, voltando para a tela de Atualizar Associados
   async function atualiza() {
     let verificaErros = 0;
     let mensagemErro = [];
@@ -213,7 +228,7 @@ export default function EditRegisterScreen(props) {
       mensagemErro[3] = '';
     }
 
-    if (dadosAssociado.aniversario === '') {
+    if (dadosAssociado.nascimento === '') {
       verificaErros++;
       mensagemErro[4] = '*Favor preencher campo';
     } else {
@@ -244,18 +259,17 @@ export default function EditRegisterScreen(props) {
       inputEmail: mensagemErro[1],
       inputTelefone: mensagemErro[2],
       inputNumDependentes: mensagemErro[3],
-      inputAniversario: mensagemErro[4],
+      inputNascimento: mensagemErro[4],
       inputSexo: mensagemErro[5],
     });
     if (verificaErros === 0) {
-      await guardaCadastro();
-      //Alert.alert('Cadastro atualizado com sucesso!');
-      props.navigation.pop();
+      await atualizaCadastro();
+      props.navigation.pop(); // Volta uma tela
       props.navigation.getParam('setRefresh')(
         !props.navigation.getParam('refresh'),
-      );
+      ); // Atualiza a FlatList assim que volta
       Alert.alert('Cadastro atualizado com sucesso!');
-      props.navigation.getParam('listaTodosAssociados')();
+      props.navigation.getParam('listaTodosAssociados')(); // Lista todos os associados
     } else {
       Alert.alert('Não foi possível atualizar o cadastro!');
     }
@@ -319,19 +333,19 @@ export default function EditRegisterScreen(props) {
                   fontWeight: 'bold',
                   alignSelf: 'flex-start',
                 }}>
-                DATA DE ANIVERSÁRIO
+                DATA DE NASCIMENTO
               </Text>
               <View style={styles.datePickerContainer}>
                 <Icon name="date-range" size={24} color="#FFF" />
                 <DatePicker
                   style={{width: '100%'}}
-                  date={dadosAssociado.aniversario}
-                  placeholder="Escolha a data de aniversário"
+                  date={dadosAssociado.nascimento}
+                  placeholder="Escolha a data de nascimento"
                   format="DD-MM-YYYY"
                   minDate="01-01-1910"
                   maxDate="31-12-2001"
                   showIcon={false}
-                  onDateChange={changeAniversario}
+                  onDateChange={changeNascimento}
                   customStyles={{
                     dateText: {
                       fontSize: 16,
@@ -351,7 +365,7 @@ export default function EditRegisterScreen(props) {
                   }}
                 />
               </View>
-              <Text style={styles.errorText}>{erro.inputAniversario}</Text>
+              <Text style={styles.errorText}>{erro.inputNascimento}</Text>
             </View>
 
             <View

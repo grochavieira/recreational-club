@@ -7,173 +7,204 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
-
 import LinearGradient from 'react-native-linear-gradient';
-
-import Colors from '../constants/colors';
 import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import Colors from '../constants/colors';
 import Input from '../components/Input';
 import CustomButton from '../components/CustomButton';
 import Header from '../components/Header';
 import getRealm from '../services/realm';
 
 export default function RegisterScreen() {
-  const [dadosCliente, setDadosCliente] = useState({
-    id: 0,
+  // Guarda os dados digitados pelo usuário para cadastro de associado
+  const [dadosAssociado, setDadosAssociado] = useState({
     nome: '',
     email: '',
     telefone: '',
     numDependentes: '',
-    aniversario: '',
+    nascimento: '',
     sexo: '',
+    numVisitas: 0,
     masculino: false,
     feminino: false,
     outros: false,
   });
 
+  // Guarda as mensagens de erro se algum input de dados estiver errado
   const [erro, setErro] = useState({
     inputNome: '',
     inputEmail: '',
     inputTelefone: '',
     inputNumDependentes: '',
-    inputAniversario: '',
+    inputNascimento: '',
     inputSexo: '',
   });
 
+  // Guarda os dados de cadastro do banco de dados dos associados
   const [cadastros, setCadastros] = useState([]);
 
-  let clienteId = 0;
+  // Será usado para pegar o próximo id de cadastro de associado disponível
+  let idDisponivelAssociado = 1;
 
+  // Roda a primeira vez que entra nessa tela para pegar os cadastros de associado do banco de dados
   useEffect(() => {
     async function carregaCadastros() {
       const realm = await getRealm();
 
-      const dados = realm.objects('Client').sorted('id', false);
-
+      const dados = realm.objects('Associate').sorted('id', false);
       setCadastros(dados);
     }
 
     carregaCadastros();
   }, []);
 
-  const clickNome = nome => {
-    setDadosCliente({...dadosCliente, nome: nome});
+  // Pega os inputs do usuário e apaga a mensagem de erro se as condições forem alcançadas
+  const changeNome = nome => {
+    setDadosAssociado({...dadosAssociado, nome: nome});
     if (nome != '') {
       setErro({...erro, inputNome: ''});
     }
   };
 
-  const clickEmail = email => {
-    setDadosCliente({...dadosCliente, email: email});
+  const changeEmail = email => {
+    setDadosAssociado({...dadosAssociado, email: email});
     if (email != '') {
       setErro({...erro, inputEmail: ''});
     }
   };
 
-  const clickTelefone = telefone => {
-    setDadosCliente({...dadosCliente, telefone: telefone});
+  /* Aqui também não deixa o usuário digitar outras coisas além de números,
+   *  se digitar letras e simbolos, serão apagadas
+   */
+  const changeTelefone = telefone => {
+    let novoTexto = '';
+    let numeros = '0123456789';
+
+    for (var i = 0; i < telefone.length; i++) {
+      if (numeros.indexOf(telefone[i]) > -1) {
+        novoTexto = novoTexto + telefone[i];
+      } else {
+      }
+    }
+    setDadosAssociado({...dadosAssociado, telefone: novoTexto});
     if (telefone.length === 11) {
       setErro({...erro, inputTelefone: ''});
     }
   };
 
-  const clickNumDependentes = numDependentes => {
-    setDadosCliente({...dadosCliente, numDependentes: numDependentes});
+  const changeNumDependentes = numDependentes => {
+    let novoTexto = '';
+    let numeros = '0123456789';
+
+    for (var i = 0; i < numDependentes.length; i++) {
+      if (numeros.indexOf(numDependentes[i]) > -1) {
+        novoTexto = novoTexto + numDependentes[i];
+      } else {
+      }
+    }
+    setDadosAssociado({...dadosAssociado, numDependentes: novoTexto});
     if (numDependentes != '') {
       setErro({...erro, inputNumDependentes: ''});
     }
   };
 
-  const clickAniversario = aniversario => {
-    setDadosCliente({...dadosCliente, aniversario: aniversario});
-    if (aniversario != '') {
-      setErro({...erro, inputAniversario: ''});
+  const changeNascimento = nascimento => {
+    setDadosAssociado({...dadosAssociado, nascimento: nascimento});
+    if (nascimento != '') {
+      setErro({...erro, inputNascimento: ''});
     }
   };
 
-  const clickMale = () => {
-    setDadosCliente({
-      ...dadosCliente,
-      masculino: !dadosCliente.masculino,
+  // Muda a condição da checkbox quando o usuário clica nas caixinhas de escolha
+  const changeMale = () => {
+    setDadosAssociado({
+      ...dadosAssociado,
+      masculino: !dadosAssociado.masculino,
       feminino: false,
       outros: false,
     });
     setErro({...erro, inputSexo: ''});
   };
 
-  const clickFemale = () => {
-    setDadosCliente({
-      ...dadosCliente,
+  const changeFemale = () => {
+    setDadosAssociado({
+      ...dadosAssociado,
       masculino: false,
-      feminino: !dadosCliente.feminino,
+      feminino: !dadosAssociado.feminino,
       outros: false,
     });
     setErro({...erro, inputSexo: ''});
   };
 
-  const clickOthers = () => {
-    setDadosCliente({
-      ...dadosCliente,
+  const changeOthers = () => {
+    setDadosAssociado({
+      ...dadosAssociado,
       masculino: false,
       feminino: false,
-      outros: !dadosCliente.outros,
+      outros: !dadosAssociado.outros,
     });
     setErro({...erro, inputSexo: ''});
   };
 
+  // Guarda no banco de dados os cadastros após as verificações
   async function guardaCadastro() {
     dados = {
-      id: clienteId,
-      nomeCompleto: dadosCliente.nome,
-      email: dadosCliente.email,
-      telefone: dadosCliente.telefone,
-      numDependentes: dadosCliente.numDependentes,
-      aniversario: dadosCliente.aniversario,
-      sexo: dadosCliente.sexo,
+      id: idDisponivelAssociado,
+      nomeCompleto: dadosAssociado.nome,
+      email: dadosAssociado.email,
+      telefone: dadosAssociado.telefone,
+      numDependentes: dadosAssociado.numDependentes,
+      nascimento: dadosAssociado.nascimento,
+      sexo: dadosAssociado.sexo,
+      numVisitas: dadosAssociado.numVisitas,
     };
 
+    // Pega o banco de dados
     const realm = await getRealm();
 
+    // Abre o banco em modo de escrita
     realm.write(() => {
-      realm.create('Client', dados);
+      realm.create('Associate', dados); // Cria um novo cadastro com os dados digitados
     });
   }
 
+  // Verifica os erros de dados e cadastra se tudo estiver correto
   async function cadastra() {
     let verificaErros = 0;
     let mensagemErro = [];
 
-    if (dadosCliente.nome === '') {
+    if (dadosAssociado.nome === '') {
       verificaErros++;
       mensagemErro[0] = '*Favor preencher campo';
     } else {
       mensagemErro[0] = '';
     }
 
-    if (dadosCliente.email === '') {
+    if (dadosAssociado.email === '') {
       verificaErros++;
       mensagemErro[1] = '*Favor preencher campo';
     } else {
       mensagemErro[1] = '';
     }
 
-    if (dadosCliente.telefone.length < 11) {
+    if (dadosAssociado.telefone.length < 11) {
       verificaErros++;
       mensagemErro[2] = '*Campo inserido incorretamente';
     } else {
       mensagemErro[2] = '';
     }
 
-    if (dadosCliente.numDependentes === '') {
+    if (dadosAssociado.numDependentes === '') {
       verificaErros++;
       mensagemErro[3] = '*Favor preencher campo';
     } else {
       mensagemErro[3] = '';
     }
 
-    if (dadosCliente.aniversario === '') {
+    if (dadosAssociado.nascimento === '') {
       verificaErros++;
       mensagemErro[4] = '*Favor preencher campo';
     } else {
@@ -181,20 +212,20 @@ export default function RegisterScreen() {
     }
 
     if (
-      dadosCliente.masculino === false &&
-      dadosCliente.feminino === false &&
-      dadosCliente.outros === false
+      dadosAssociado.masculino === false &&
+      dadosAssociado.feminino === false &&
+      dadosAssociado.outros === false
     ) {
       verificaErros++;
       mensagemErro[5] = '*Escolha uma das opções';
-    } else if (dadosCliente.masculino === true) {
-      dadosCliente.sexo = 'Masculino';
+    } else if (dadosAssociado.masculino === true) {
+      dadosAssociado.sexo = 'Masculino';
       mensagemErro[5] = '';
-    } else if (dadosCliente.feminino === true) {
-      dadosCliente.sexo = 'Feminino';
+    } else if (dadosAssociado.feminino === true) {
+      dadosAssociado.sexo = 'Feminino';
       mensagemErro[5] = '';
     } else {
-      dadosCliente.sexo = 'Outros';
+      dadosAssociado.sexo = 'Outros';
       mensagemErro[5] = '';
     }
 
@@ -204,14 +235,29 @@ export default function RegisterScreen() {
       inputEmail: mensagemErro[1],
       inputTelefone: mensagemErro[2],
       inputNumDependentes: mensagemErro[3],
-      inputAniversario: mensagemErro[4],
+      inputNascimento: mensagemErro[4],
       inputSexo: mensagemErro[5],
     });
     if (verificaErros === 0) {
-      cadastros.map(item => (clienteId = item.id + 1));
-      await guardaCadastro();
+      cadastros.map(item => {
+        if (idDisponivelAssociado === item.id) {
+          idDisponivelAssociado++;
+        }
+      }); // Pega o próximo id disponível
+      await guardaCadastro(); // Espera mandar o cadastro para o banco de dados dos associados
       Alert.alert('Cadastro realizado com sucesso!');
-      setDadosFuncionario({});
+      setDadosAssociado({
+        nome: '',
+        email: '',
+        telefone: '',
+        numDependentes: '',
+        nascimento: '',
+        sexo: '',
+        numVisitas: 0,
+        masculino: false,
+        feminino: false,
+        outros: false,
+      }); // Apaga os inputs de dados
     } else {
       Alert.alert('Não foi possível realizar o cadastro!');
     }
@@ -231,9 +277,9 @@ export default function RegisterScreen() {
             <Input
               nameIcon="person"
               textPlaceHolder="Digite o nome completo"
-              length={30}
-              value={dadosCliente.nome}
-              onChange={clickNome}
+              length={28}
+              value={dadosAssociado.nome}
+              onChange={changeNome}
               inputErrorText={erro.inputNome}
               inputTextTitle="NOME"
             />
@@ -241,8 +287,8 @@ export default function RegisterScreen() {
               nameIcon="email"
               textPlaceHolder="Digite o endereço de email"
               length={30}
-              value={dadosCliente.email}
-              onChange={clickEmail}
+              value={dadosAssociado.email}
+              onChange={changeEmail}
               inputErrorText={erro.inputEmail}
               inputTextTitle="EMAIL"
             />
@@ -251,8 +297,8 @@ export default function RegisterScreen() {
               textPlaceHolder="Digite o número de tel./cel."
               keyboard="numeric"
               length={11}
-              value={dadosCliente.telefone}
-              onChange={clickTelefone}
+              value={dadosAssociado.telefone}
+              onChange={changeTelefone}
               inputErrorText={erro.inputTelefone}
               inputTextTitle="TELEFONE/CELULAR"
             />
@@ -261,8 +307,8 @@ export default function RegisterScreen() {
               textPlaceHolder="Marido, esposa, filhos(as), etc..."
               keyboard="numeric"
               length={2}
-              value={dadosCliente.numDependentes}
-              onChange={clickNumDependentes}
+              value={dadosAssociado.numDependentes}
+              onChange={changeNumDependentes}
               inputErrorText={erro.inputNumDependentes}
               inputTextTitle="NÚMERO DE DEPENDENTES"
             />
@@ -275,19 +321,19 @@ export default function RegisterScreen() {
                   fontWeight: 'bold',
                   alignSelf: 'flex-start',
                 }}>
-                DATA DE ANIVERSÁRIO
+                DATA DE NASCIMENTO
               </Text>
               <View style={styles.datePickerContainer}>
                 <Icon name="date-range" size={24} color="#FFF" />
                 <DatePicker
                   style={{width: '100%'}}
-                  date={dadosCliente.aniversario}
-                  placeholder="Escolha a data de aniversário"
+                  date={dadosAssociado.nascimento}
+                  placeholder="Escolha a data de nascimento"
                   format="DD-MM-YYYY"
                   minDate="01-01-1910"
                   maxDate="31-12-2001"
                   showIcon={false}
-                  onDateChange={clickAniversario}
+                  onDateChange={changeNascimento}
                   customStyles={{
                     dateText: {
                       fontSize: 16,
@@ -307,7 +353,7 @@ export default function RegisterScreen() {
                   }}
                 />
               </View>
-              <Text style={styles.errorText}>{erro.inputAniversario}</Text>
+              <Text style={styles.errorText}>{erro.inputNascimento}</Text>
             </View>
 
             <View style={styles.principalGenderContainer}>
@@ -323,22 +369,22 @@ export default function RegisterScreen() {
                 <View>
                   <View style={styles.maleContainer}>
                     <CheckBox
-                      value={dadosCliente.masculino}
-                      onChange={clickMale}
+                      value={dadosAssociado.masculino}
+                      onChange={changeMale}
                     />
                     <Text style={styles.textGenders}>Masculino</Text>
                   </View>
                   <View style={styles.femaleContainer}>
                     <CheckBox
-                      value={dadosCliente.feminino}
-                      onChange={clickFemale}
+                      value={dadosAssociado.feminino}
+                      onChange={changeFemale}
                     />
                     <Text style={styles.textGenders}>Feminino</Text>
                   </View>
                   <View style={styles.othersContainer}>
                     <CheckBox
-                      value={dadosCliente.outros}
-                      onChange={clickOthers}
+                      value={dadosAssociado.outros}
+                      onChange={changeOthers}
                     />
                     <Text style={styles.textGenders}>Outros</Text>
                   </View>

@@ -18,38 +18,67 @@ const FlatListItem = props => {
           </Text>
         </View>
         <View style={styles.flatListItemBody}>
-          <View>
-            <Text style={styles.flatListItemBodyText}>Email:</Text>
-            <Text style={styles.flatListItemBodyText}>Telefone: </Text>
-            <Text style={styles.flatListItemBodyText}>Sexo: </Text>
-            <Text style={styles.flatListItemBodyText}>Nascimento:</Text>
-            <Text style={styles.flatListItemBodyText}>Dependentes:</Text>
-            <Text style={styles.flatListItemBodyText}>Visitas:</Text>
+          <View style={styles.flatListItemBodyLine}>
+            <View style={styles.flatListItemBodyBox}>
+              <Text style={styles.flatListItemBodyLabelText}>ID:</Text>
+              <Text style={{...styles.flatListItemBodyValueText}}>
+                {props.idAssociado}
+              </Text>
+            </View>
+            <View style={styles.flatListItemBodyBox}>
+              <Text style={styles.flatListItemBodyLabelText}>TELEFONE:</Text>
+              <Text style={{...styles.flatListItemBodyValueText}}>
+                {props.telefoneAssociado}
+              </Text>
+            </View>
           </View>
-          <View>
-            <Text style={{...styles.flatListItemBodyText}} numberOfLines={1}>
+
+          <View style={styles.flatListItemBodyBox}>
+            <Text style={styles.flatListItemBodyLabelText}>EMAIL:</Text>
+            <Text
+              style={{...styles.flatListItemBodyValueText}}
+              numberOfLines={1}>
               {props.emailAssociado}
             </Text>
-            <Text style={styles.flatListItemBodyText}>
-              {props.telefoneAssociado}
-            </Text>
-            <Text style={styles.flatListItemBodyText}>
-              {props.sexoAssociado}
-            </Text>
-            <Text style={styles.flatListItemBodyText}>
-              {props.aniversarioAssociado}
-            </Text>
-            <Text style={styles.flatListItemBodyText}>
-              {props.numDependentesAssociado}
-            </Text>
-            <Text style={styles.flatListItemBodyText}>
-              {props.visitasAssociado}
-            </Text>
+          </View>
+
+          <View style={styles.flatListItemBodyLine}>
+            <View style={styles.flatListItemBodyBox}>
+              <Text style={styles.flatListItemBodyLabelText}>SEXO:</Text>
+              <Text style={{...styles.flatListItemBodyValueText}}>
+                {props.sexoAssociado}
+              </Text>
+            </View>
+            <View style={styles.flatListItemBodyBox}>
+              <Text style={styles.flatListItemBodyLabelText}>NASCIMENTO:</Text>
+              <Text style={{...styles.flatListItemBodyValueText}}>
+                {props.nascimentoAssociado}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.flatListItemBodyLine}>
+            <View style={styles.flatListItemBodyBox}>
+              <Text style={styles.flatListItemBodyLabelText}>
+                N. DE DEPENDENTES:
+              </Text>
+              <Text style={{...styles.flatListItemBodyValueText}}>
+                {props.numDependentesAssociado}
+              </Text>
+            </View>
+            <View style={styles.flatListItemBodyBox}>
+              <Text style={styles.flatListItemBodyLabelText}>
+                N. DE VISITAS:
+              </Text>
+              <Text style={{...styles.flatListItemBodyValueText}}>
+                {props.visitasAssociado}
+              </Text>
+            </View>
           </View>
         </View>
         <TouchableOpacity
           style={styles.flatListItemFooter}
-          onPress={props.onAction.bind(this, props.id)}>
+          onPress={props.onAction.bind(this, props.idAssociado)}>
           <View
             style={{
               flexDirection: 'row',
@@ -91,22 +120,38 @@ const styles = StyleSheet.create({
     borderBottomWidth: 4,
     borderColor: '#FFF',
   },
-  flatListItemBodyText: {
-    color: '#FFF',
-    margin: 5,
-    fontSize: 14,
-  },
   flatListItemFooterText: {
     color: Colors.primaria,
     margin: 5,
     fontSize: 16,
     fontWeight: 'bold',
   },
+  flatListItemBodyLabelText: {
+    color: '#FFF',
+    margin: 5,
+    fontWeight: 'bold',
+    fontSize: 13,
+  },
+  flatListItemBodyValueText: {
+    color: '#FFF',
+    margin: 5,
+    fontSize: 13,
+  },
   flatListItemBody: {
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 10,
+  },
+  flatListItemBodyBox: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderRadius: 5,
+    margin: 5,
+  },
+  flatListItemBodyLine: {
+    flexDirection: 'row',
   },
   flatListItemHeaderText: {
     color: '#FFF',

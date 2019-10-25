@@ -1,13 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  Alert,
-  CheckBox,
-  Text,
-  ScrollView,
-} from 'react-native';
-
+import {View, StyleSheet, Alert, ScrollView} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Colors from '../constants/colors';
@@ -18,6 +10,7 @@ import Header from '../components/Header';
 import getRealm from '../services/realm';
 
 export default function RegisterScreen(props) {
+  // Guarda os dados de input do funcionário para cadastro
   const [dadosFuncionario, setDadosFuncionario] = useState({
     id: 0,
     nome: '',
@@ -29,6 +22,7 @@ export default function RegisterScreen(props) {
     chaveInscricao: '',
   });
 
+  // Guarda as mensagens de erro se o usuário errar em algum input
   const [erro, setErro] = useState({
     inputNome: '',
     inputEmail: '',
@@ -39,25 +33,29 @@ export default function RegisterScreen(props) {
     inputChaveInscricao: '',
   });
 
+  // Guarda a troca de icones do olho e se a senha será mostrada ou não (senha)
   const [mostraSenha, setMostraSenha] = useState({
-    olho: 'eye',
-    senha: true,
+    olho: 'eye-slash',
+    senhaInvisivel: true,
   });
 
   const [mostraConfirmarSenha, setMostraConfirmarSenha] = useState({
-    olho: 'eye',
-    senha: true,
+    olho: 'eye-slash',
+    senhaInvisivel: true,
   });
 
   const [mostraChave, setMostraChave] = useState({
-    olho: 'eye',
-    senha: true,
+    olho: 'eye-slash',
+    senhaInvisivel: true,
   });
 
+  // Guarda os cadastros no banco de dados
   const [cadastros, setCadastros] = useState([]);
 
-  let funcionarioId = 0;
+  // Será utilizado para guarda o próximo id de cadastro disponível
+  let idDisponivelFuncionario = 0;
 
+  // Roda uma vez quando entra nessa tela para pegar os cadastros do banco de dados
   useEffect(() => {
     async function carregaCadastros() {
       const realm = await getRealm();
@@ -70,96 +68,92 @@ export default function RegisterScreen(props) {
     carregaCadastros();
   }, []);
 
-  const clickNome = nome => {
+  // muda o nome digitado pelo usuário, e reseta a mensagem de erro se as condições forem alcançadas
+  const changeNome = nome => {
     setDadosFuncionario({...dadosFuncionario, nome: nome});
     if (nome != '') {
       setErro({...erro, inputNome: ''});
     }
   };
 
-  const clickEmail = email => {
+  const changeEmail = email => {
     setDadosFuncionario({...dadosFuncionario, email: email});
     if (email != '') {
       setErro({...erro, inputEmail: ''});
     }
   };
 
-  const clickTelefone = telefone => {
-    setDadosFuncionario({...dadosFuncionario, telefone: telefone});
+  // Aqui também verifica se os dados digitados são apenas números, se não, ele apaga
+  const changeTelefone = telefone => {
+    let novoTexto = '';
+    let numeros = '0123456789';
+
+    for (var i = 0; i < telefone.length; i++) {
+      if (numeros.indexOf(telefone[i]) > -1) {
+        novoTexto = novoTexto + telefone[i];
+      } else {
+      }
+    }
+    setDadosFuncionario({...dadosFuncionario, telefone: novoTexto});
     if (telefone.length === 11) {
       setErro({...erro, inputTelefone: ''});
     }
   };
 
-  const clickUsuario = usuario => {
+  const changeUsuario = usuario => {
     setDadosFuncionario({...dadosFuncionario, usuario: usuario});
     if (usuario.length >= 8) {
       setErro({...erro, inputUsuario: ''});
     }
   };
 
-  const clickSenha = senha => {
+  const changeSenha = senha => {
     setDadosFuncionario({...dadosFuncionario, senha: senha});
     if (senha.length >= 8) {
       setErro({...erro, inputSenha: ''});
     }
   };
 
-  const clickConfirmarSenha = confirmarSenha => {
+  const changeConfirmarSenha = confirmarSenha => {
     setDadosFuncionario({...dadosFuncionario, confirmarSenha: confirmarSenha});
     if (confirmarSenha != '' && confirmarSenha === dadosFuncionario.senha) {
       setErro({...erro, inputConfimar: ''});
     }
   };
 
-  const clickChaveInscricao = chaveInscricao => {
+  const changeChaveInscricao = chaveInscricao => {
     setDadosFuncionario({...dadosFuncionario, chaveInscricao: chaveInscricao});
     if (chaveInscricao != '') {
       setErro({...erro, inputChaveInscricao: ''});
     }
   };
 
-  function clickEyeSenha() {
-    if (mostraSenha.olho === 'eye') {
-      setMostraSenha({olho: 'eye-slash', senha: false});
+  // Muda o icone do olho, tornando a senha visível ou invísivel
+  function changeEyeSenha() {
+    if (mostraSenha.olho === 'eye-slash') {
+      setMostraSenha({olho: 'eye', senhaInvisivel: false});
     } else {
-      setMostraSenha({olho: 'eye', senha: true});
+      setMostraSenha({olho: 'eye-slash', senhaInvisivel: true});
     }
   }
 
-  function clickEyeConfirmarSenha() {
-    if (mostraConfirmarSenha.olho === 'eye') {
-      setMostraConfirmarSenha({olho: 'eye-slash', senha: false});
+  function changeEyeConfirmarSenha() {
+    if (mostraConfirmarSenha.olho === 'eye-slash') {
+      setMostraConfirmarSenha({olho: 'eye', senhaInvisivel: false});
     } else {
-      setMostraConfirmarSenha({olho: 'eye', senha: true});
+      setMostraConfirmarSenha({olho: 'eye-slash', senhaInvisivel: true});
     }
   }
 
-  function clickEyeChave() {
-    if (mostraChave.olho === 'eye') {
-      setMostraChave({olho: 'eye-slash', senha: false});
+  function changeEyeChave() {
+    if (mostraChave.olho === 'eye-slash') {
+      setMostraChave({olho: 'eye', senhaInvisivel: false});
     } else {
-      setMostraChave({olho: 'eye', senha: true});
+      setMostraChave({olho: 'eye-slash', senhaInvisivel: true});
     }
   }
 
-  async function guardaCadastro() {
-    dados = {
-      id: funcionarioId,
-      nomeCompleto: dadosFuncionario.nome,
-      email: dadosFuncionario.email,
-      telefone: dadosFuncionario.telefone,
-      usuario: dadosFuncionario.usuario,
-      senha: dadosFuncionario.senha,
-    };
-
-    const realm = await getRealm();
-
-    realm.write(() => {
-      realm.create('Employee', dados);
-    });
-  }
-
+  // Verifica se existem erros e cadastra se as condições minímas foram alcançadas
   async function cadastra() {
     let verificaErros = 0;
     let mensagemErro = [];
@@ -233,35 +227,37 @@ export default function RegisterScreen(props) {
       inputConfirmarSenha: mensagemErro[5],
       inputChaveInscricao: mensagemErro[6],
     });
+
     if (verificaErros === 0) {
-      cadastros.map(item => (funcionarioId = item.id + 1));
-      await guardaCadastro();
+      cadastros.map(item => (idDisponivelFuncionario = item.id + 1)); // Pega o próximo id disponível
+      await guardaCadastro(); // Espera o cadastro ser realizado
       Alert.alert('Cadastro realizado com sucesso!');
-      setDadosFuncionario({});
-      props.navigation.push('Login');
+      props.navigation.pop(); // Volta para a tela de login
     } else {
       Alert.alert('Não foi possível realizar o cadastro!');
     }
   }
 
-  /*
-  this.items = cadastros.map(dados => (
-    <View
-      style={{
-        backgroundColor: '#FFF',
-        borderColor: '#FFF',
-        borderRadius: 5,
-        margin: 10,
-      }}>
-      <Text style={{fontSize: 15, color: '#FF3366'}}>{dados.id}</Text>
-      <Text style={{fontSize: 15, color: '#FF3366'}}>{dados.nomeCompleto}</Text>
-      <Text style={{fontSize: 15, color: '#FF3366'}}>{dados.email}</Text>
-      <Text style={{fontSize: 15, color: '#FF3366'}}>{dados.telefone}</Text>
-      <Text style={{fontSize: 15, color: '#FF3366'}}>{dados.senha}</Text>
-      <Text style={{fontSize: 15, color: '#FF3366'}}>{dados.usuario}</Text>
-    </View>
-  ));
-*/
+  // Pega os dados de cadastro e manda eles para o banco de dados
+  async function guardaCadastro() {
+    dados = {
+      id: idDisponivelFuncionario,
+      nomeCompleto: dadosFuncionario.nome,
+      email: dadosFuncionario.email,
+      telefone: dadosFuncionario.telefone,
+      usuario: dadosFuncionario.usuario,
+      senha: dadosFuncionario.senha,
+    };
+
+    // Pega o banco de dados
+    const realm = await getRealm();
+
+    // Abre o banco de dados para inserir dados nele
+    realm.write(() => {
+      realm.create('Employee', dados); // Cria um novo cadastro de funcionários com os dados inseridos
+    });
+  }
+
   return (
     <LinearGradient
       colors={[Colors.primaria, Colors.secundaria]}
@@ -278,7 +274,7 @@ export default function RegisterScreen(props) {
               textPlaceHolder="Digite o seu nome completo"
               length={30}
               value={dadosFuncionario.nome}
-              onChange={clickNome}
+              onChange={changeNome}
               inputErrorText={erro.inputNome}
               inputTextTitle="NOME"
             />
@@ -287,7 +283,7 @@ export default function RegisterScreen(props) {
               textPlaceHolder="Digite o seu endereço de email"
               length={30}
               value={dadosFuncionario.email}
-              onChange={clickEmail}
+              onChange={changeEmail}
               inputErrorText={erro.inputEmail}
               inputTextTitle="EMAIL"
             />
@@ -297,7 +293,7 @@ export default function RegisterScreen(props) {
               keyboard="numeric"
               length={11}
               value={dadosFuncionario.telefone}
-              onChange={clickTelefone}
+              onChange={changeTelefone}
               inputErrorText={erro.inputTelefone}
               inputTextTitle="TELEFONE/CELULAR"
             />
@@ -306,7 +302,7 @@ export default function RegisterScreen(props) {
               textPlaceHolder="Digite o seu login de usuário"
               length={20}
               value={dadosFuncionario.usuario}
-              onChange={clickUsuario}
+              onChange={changeUsuario}
               inputErrorText={erro.inputUsuario}
               inputTextTitle="USUÁRIO"
             />
@@ -315,35 +311,35 @@ export default function RegisterScreen(props) {
               textPlaceHolder="Digite a sua senha"
               length={16}
               value={dadosFuncionario.senha}
-              onChange={clickSenha}
+              onChange={changeSenha}
               inputErrorText={erro.inputSenha}
               inputTextTitle="SENHA"
-              security={mostraSenha.senha}
+              security={mostraSenha.senhaInvisivel}
               mudaOlho={mostraSenha.olho}
-              mostraSenha={clickEyeSenha}
+              mostraSenha={changeEyeSenha}
             />
             <PasswordInput
               nameIcon="lock"
               textPlaceHolder="Confirme a sua senha"
               length={16}
               value={dadosFuncionario.confirmarSenha}
-              onChange={clickConfirmarSenha}
+              onChange={changeConfirmarSenha}
               inputErrorText={erro.inputConfirmarSenha}
               inputTextTitle="CONFIRMAR SENHA"
-              security={mostraConfirmarSenha.senha}
+              security={mostraConfirmarSenha.senhaInvisivel}
               mudaOlho={mostraConfirmarSenha.olho}
-              mostraSenha={clickEyeConfirmarSenha}
+              mostraSenha={changeEyeConfirmarSenha}
             />
             <PasswordInput
               nameIcon="vpn-key"
               textPlaceHolder="Digite a chave para se cadastrar"
               value={dadosFuncionario.chaveInscricao}
-              onChange={clickChaveInscricao}
+              onChange={changeChaveInscricao}
               inputErrorText={erro.inputChaveInscricao}
               inputTextTitle="CHAVE DE CADASTRO"
-              security={mostraChave.senha}
+              security={mostraChave.senhaInvisivel}
               mudaOlho={mostraChave.olho}
-              mostraSenha={clickEyeChave}
+              mostraSenha={changeEyeChave}
             />
           </View>
 

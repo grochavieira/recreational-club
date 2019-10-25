@@ -1,7 +1,7 @@
-import React, {Component, useEffect, useState} from 'react';
-import {View, StyleSheet, Alert, Text, FlatList} from 'react-native';
-
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Alert, FlatList} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+
 import FlatListItem from '../components/FlatListItem';
 import Colors from '../constants/colors';
 import Search from '../components/Search';
@@ -9,10 +9,11 @@ import Header from '../components/Header';
 import getRealm from '../services/realm';
 
 export default function RegisterScreen(props) {
-  const [cadastros, setCadastros] = useState([]);
-  const [refresh, setRefresh] = useState(false);
-  const [nomeAssociado, setNomeAssociado] = useState('');
+  const [cadastros, setCadastros] = useState([]); // Guarda os cadastros do banco de dados
+  const [refresh, setRefresh] = useState(false); // Variável para atualizar a FlatList
+  const [nomeAssociado, setNomeAssociado] = useState(''); // Guarda o nome digitado para buscar por um associado existente
 
+  // Roda a primeira vez que entra na tela para guardar todos os registros do banco de dados dos associados
   useEffect(() => {
     async function carregaCadastros() {
       const realm = await getRealm();
@@ -25,6 +26,7 @@ export default function RegisterScreen(props) {
     carregaCadastros();
   }, []);
 
+  // Pergunta antes de remover um cadastro
   async function perguntaParaRemover(idAssociado) {
     Alert.alert(
       'Remover Associado',
@@ -35,30 +37,26 @@ export default function RegisterScreen(props) {
       ],
     );
   }
+
+  // Remove o cadastro escolhido
   async function remove(idAssociado) {
     setCadastros(cadastrosAtuais => {
       return cadastrosAtuais.filter(cadastro => cadastro.id !== idAssociado);
     });
     const realm = await getRealm();
     realm.write(() => {
-      let remover = realm.create(
-        'Associate',
-        {
-          id: idAssociado,
-          nomeCompleto: '',
-          email: '',
-          telefone: '',
-          numDependentes: '',
-          sexo: '',
-        },
-        true,
-      );
+      // Pega o cadastro igual ao id do associado escolhido para ser deletado
+      const cadastroSelecionado = realm
+        .objects('Associate')
+        .filtered(`id == "${idAssociado}"`);
 
-      realm.delete(remover);
+      // deleta o associado escolhido
+      realm.delete(cadastroSelecionado);
     });
     Alert.alert('Associado removido com sucesso!');
   }
 
+  // Faz uma busca pelo nome digitado e atualiza a FlatList retornando os cadastros que tem esse nome
   async function buscaAssociado() {
     const realm = await getRealm();
     const dadosFiltrados = realm
@@ -72,6 +70,7 @@ export default function RegisterScreen(props) {
     }
   }
 
+  // Busca todos os associados cadastrados e atualiza a FlatList com esses cadastros
   async function listaTodosAssociados() {
     const realm = await getRealm();
     const todosAssociados = realm.objects('Associate').sorted('id', false);
@@ -102,20 +101,25 @@ export default function RegisterScreen(props) {
           contentContainerStyle={{flexGrow: 1}}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => item.id.toString()}
-          data={cadastros}
+          data={
+            cadastros
+          } /* Dados que serão destrinchados e renderizados pela FlatList */
+          extraData={
+            refresh
+          } /* Variável que atualiza a FlatList quando alterada */
           renderItem={itemData => (
             <FlatListItem
               styleContainer={{backgroundColor: '#FF3366'}}
               styleText={{color: '#FF3366'}}
               key={itemData.item.id}
-              id={itemData.item.id}
+              idAssociado={itemData.item.id}
               nomeAssociado={itemData.item.nomeCompleto}
               emailAssociado={itemData.item.email}
               telefoneAssociado={itemData.item.telefone}
-              aniversarioAssociado={itemData.item.aniversario}
+              nascimentoAssociado={itemData.item.nascimento}
               sexoAssociado={itemData.item.sexo}
               numDependentesAssociado={itemData.item.numDependentes}
-              visitasAssociado="0"
+              visitasAssociado={itemData.item.numVisitas}
               nomeBotao="REMOVER"
               nomeIcone="delete"
               iconColor="#FF3366"

@@ -1,8 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, ScrollView, Alert} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import Input from '../components/Input';
 import PasswordInput from '../components/PasswordInput';
 import CustomButton from '../components/CustomButton';
@@ -11,24 +18,28 @@ import Colors from '../constants/colors';
 import getRealm from '../services/realm';
 
 export default function LoginScreen(props) {
+  // Guarda os dados de input do usuário
   const [dadosFuncionario, setDadosFuncionario] = useState({
     usuario: '',
     senha: '',
   });
 
+  // Animação do olho e se a senha será visível ou não
   const [mostraSenha, setMostraSenha] = useState({
-    olho: 'eye',
-    senha: true,
+    olho: 'eye-slash',
+    senhaInvisivel: true,
   });
 
+  // Mostra o erro caso o usuário erre o input de usuario ou senha
   const [erro, setErro] = useState({inputUsuario: '', inputSenha: ''});
 
+  // Guarda os cadastros de funcionário no banco de dados
   const [cadastros, setCadastros] = useState([]);
 
+  // Roda na primeira vez que entra na tela de login para pegar os dados do banco de dados
   useEffect(() => {
     async function carregaCadastros() {
       const realm = await getRealm();
-
       const dados = realm.objects('Employee').sorted('id', false);
 
       setCadastros(dados);
@@ -37,32 +48,37 @@ export default function LoginScreen(props) {
     carregaCadastros();
   }, []);
 
-  const clickUsuario = usuario => {
+  // Pega os dados do input do usuario
+  const changeUsuario = usuario => {
     setDadosFuncionario({...dadosFuncionario, usuario: usuario});
     if (usuario.length >= 8) {
       setErro({...erro, inputUsuario: ''});
     }
   };
 
-  const clickSenha = senha => {
+  // Pega os dados do input da senha
+  const changeSenha = senha => {
     setDadosFuncionario({...dadosFuncionario, senha: senha});
     if (senha.length >= 8) {
       setErro({...erro, inputSenha: ''});
     }
   };
 
-  function clickEye() {
-    if (mostraSenha.olho === 'eye') {
-      setMostraSenha({olho: 'eye-slash', senha: false});
+  // Muda o icone do olho ao ser clicado, tornando a senha visível ou não
+  function changeEye() {
+    if (mostraSenha.olho === 'eye-slash') {
+      setMostraSenha({olho: 'eye', senhaInvisivel: false});
     } else {
-      setMostraSenha({olho: 'eye', senha: true});
+      setMostraSenha({olho: 'eye-slash', senhaInvisivel: true});
     }
   }
 
+  // Verifica se os dados digitados existem para mandar o usuário para a tela principal
   function confirmaRegistro() {
     let existeUsuario = false;
     let existeCadastro = false;
     let mensagemErro = [];
+
     cadastros.map(dados => {
       if (dadosFuncionario.usuario === dados.usuario) {
         existeUsuario = true;
@@ -109,7 +125,7 @@ export default function LoginScreen(props) {
               nameIcon="account-box"
               textPlaceHolder="Digite seu usuário"
               value={dadosFuncionario.usuario}
-              onChange={clickUsuario}
+              onChange={changeUsuario}
               inputErrorText={erro.inputUsuario}
               inputTextTitle="USUÁRIO"
             />
@@ -117,12 +133,12 @@ export default function LoginScreen(props) {
               nameIcon="lock"
               textPlaceHolder="Digite sua senha"
               value={dadosFuncionario.senha}
-              onChange={clickSenha}
+              onChange={changeSenha}
               inputErrorText={erro.inputSenha}
               inputTextTitle="SENHA"
-              security={mostraSenha.senha}
+              security={mostraSenha.senhaInvisivel}
               mudaOlho={mostraSenha.olho}
-              mostraSenha={clickEye}
+              mostraSenha={changeEye}
             />
           </View>
           <CustomButton textButton="ENTRAR" confirm={confirmaRegistro} />
@@ -131,6 +147,22 @@ export default function LoginScreen(props) {
             textButton="SEM CADASTRO?"
             confirm={() => props.navigation.push('RegisterEmployee')}
           />
+          <TouchableOpacity
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              margin: 20,
+            }}
+            onPress={() => props.navigation.push('ForgotPassword')}>
+            <Text
+              style={{
+                color: '#FF3366',
+                fontSize: 14,
+                fontWeight: 'bold',
+              }}>
+              ESQUECEU A SENHA?
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </LinearGradient>
