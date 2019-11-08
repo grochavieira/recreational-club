@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-
 import LinearGradient from 'react-native-linear-gradient';
+
 import Colors from '../constants/colors';
 import CardCommunity from './../components/CardCommunity';
-
 import Header from '../components/Header';
 
 export default function MainScreen(props) {

@@ -1,14 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import IconAwesome from 'react-native-vector-icons/FontAwesome5';
-import {
-  TextInput,
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-import Colors from '../constants/colors';
+import {TextInput, View, StyleSheet, Text} from 'react-native';
 
 const Input = props => {
   return (
@@ -18,7 +10,7 @@ const Input = props => {
         <Icon name={props.nameIcon} size={24} color="#FFF" />
         <TextInput
           {...props}
-          style={{...styles.input, ...props.style}}
+          style={{...styles.input}}
           placeholder={props.textPlaceHolder}
           placeholderTextColor="rgba(255,255,255,0.7)"
           secureTextEntry={props.security}

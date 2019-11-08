@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, StyleSheet, Text, ScrollView} from 'react-native';
-
 import LinearGradient from 'react-native-linear-gradient';
+import IconAwesome from 'react-native-vector-icons/FontAwesome5';
+
 import Colors from '../constants/colors';
 import Header from '../components/Header';
-import IconAwesome from 'react-native-vector-icons/FontAwesome5';
 
 export default function AboutScreen() {
   return (
@@ -34,7 +34,7 @@ export default function AboutScreen() {
               <View>
                 <Text style={styles.aboutBodyText}>RA: 22.118.024-3</Text>
                 <Text style={styles.aboutBodyText}>RA: 22.118.175-3</Text>
-                <Text style={styles.aboutBodyText}>RA: 22.118.000-0</Text>
+                <Text style={styles.aboutBodyText}>RA: 22.118.030-0</Text>
               </View>
             </View>
             <View style={styles.aboutFooter}>

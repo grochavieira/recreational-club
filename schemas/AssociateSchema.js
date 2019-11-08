@@ -1,6 +1,7 @@
-export default class ClientSchema {
+// Tabela dos associados
+export default class AssociateSchema {
   static schema = {
-    name: 'Client',
+    name: 'Associate',
     primaryKey: 'id',
     properties: {
       id: {type: 'int', indexed: true},
@@ -8,8 +9,9 @@ export default class ClientSchema {
       email: 'string',
       telefone: 'string',
       numDependentes: 'string',
-      aniversario: 'string',
+      nascimento: 'string',
       sexo: 'string',
+      numVisitas: 'int',
     },
   };
 }

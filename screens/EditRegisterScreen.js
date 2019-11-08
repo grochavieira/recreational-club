@@ -11,29 +11,35 @@ import LinearGradient from 'react-native-linear-gradient';
 import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconAwesome from 'react-native-vector-icons/FontAwesome5';
+import IconAntDesign from 'react-native-vector-icons/AntDesign';
 
 import Colors from '../constants/colors';
 import Input from '../components/Input';
 import CustomButton from '../components/CustomButton';
 import Header from '../components/Header';
 import getRealm from '../services/realm';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-export default function RegisterScreen() {
-  // Guarda os dados digitados pelo usuário para cadastro de associado
+export default function EditRegisterScreen(props) {
+  /* Guarda os dados que vieram da tela de Atualizar Associados e manda
+   * eles para os inputs poderem ser modificados
+   */
   const [dadosAssociado, setDadosAssociado] = useState({
-    nome: '',
-    email: '',
-    telefone: '',
-    numDependentes: '',
-    nascimento: '',
-    sexo: '',
-    numVisitas: 0,
+    id: props.navigation.getParam('dadosAssociado').id,
+    nome: props.navigation.getParam('dadosAssociado').nome,
+    email: props.navigation.getParam('dadosAssociado').email,
+    telefone: props.navigation.getParam('dadosAssociado').telefone,
+    numDependentes: props.navigation.getParam('dadosAssociado').numDependentes,
+    nascimento: props.navigation.getParam('dadosAssociado').nascimento,
+    sexo: props.navigation.getParam('dadosAssociado').sexo,
+    numVisitas: props.navigation.getParam('dadosAssociado').numVisitas,
     masculino: false,
     feminino: false,
     outros: false,
   });
 
-  // Guarda as mensagens de erro se algum input de dados estiver errado
+  // Guarda as mensagens de erro para os inputs digitados incorretamente
   const [erro, setErro] = useState({
     inputNome: '',
     inputEmail: '',
@@ -43,13 +49,10 @@ export default function RegisterScreen() {
     inputSexo: '',
   });
 
-  // Guarda os dados de cadastro do banco de dados dos associados
+  // Guarda os cadastros do banco de dados
   const [cadastros, setCadastros] = useState([]);
 
-  // Será usado para pegar o próximo id de cadastro de associado disponível
-  let idDisponivelAssociado = 1;
-
-  // Roda a primeira vez que entra nessa tela para pegar os cadastros de associado do banco de dados
+  // Roda na primeira vez que entra nessa tela
   useEffect(() => {
     async function carregaCadastros() {
       const realm = await getRealm();
@@ -59,9 +62,18 @@ export default function RegisterScreen() {
     }
 
     carregaCadastros();
+    if (dadosAssociado.sexo === 'Masculino') {
+      setDadosAssociado({...dadosAssociado, masculino: true});
+    } else if (dadosAssociado.sexo === 'Feminino') {
+      setDadosAssociado({...dadosAssociado, feminino: true});
+    } else {
+      setDadosAssociado({...dadosAssociado, outros: true});
+    }
   }, []);
 
-  // Pega os inputs do usuário e apaga a mensagem de erro se as condições forem alcançadas
+  /* Pega os valores dos inputs digitados e apaga as mensagens
+   * de erro quando as condições necessárias são alcançadas
+   */
   const changeNome = nome => {
     setDadosAssociado({...dadosAssociado, nome: nome});
     if (nome != '') {
@@ -76,9 +88,7 @@ export default function RegisterScreen() {
     }
   };
 
-  /* Aqui também não deixa o usuário digitar outras coisas além de números,
-   *  se digitar letras e simbolos, serão apagadas
-   */
+  // Aqui também impede que o usuário digite qualquer coisa que não seja números
   const changeTelefone = telefone => {
     let novoTexto = '';
     let numeros = '0123456789';
@@ -103,6 +113,7 @@ export default function RegisterScreen() {
       if (numeros.indexOf(numDependentes[i]) > -1) {
         novoTexto = novoTexto + numDependentes[i];
       } else {
+        Alert.alert('Por favor digite apenas números!');
       }
     }
     setDadosAssociado({...dadosAssociado, numDependentes: novoTexto});
@@ -115,6 +126,18 @@ export default function RegisterScreen() {
     setDadosAssociado({...dadosAssociado, nascimento: nascimento});
     if (nascimento != '') {
       setErro({...erro, inputNascimento: ''});
+    }
+  };
+
+  const diminuiNumVisitas = () => {
+    if (dadosAssociado.numVisitas - 1 < 0) {
+      setDadosAssociado({...dadosAssociado, numVisitas: 0});
+      Alert.alert('Não é possível decrementar mais!');
+    } else {
+      setDadosAssociado({
+        ...dadosAssociado,
+        numVisitas: dadosAssociado.numVisitas - 1,
+      });
     }
   };
 
@@ -149,10 +172,10 @@ export default function RegisterScreen() {
     setErro({...erro, inputSexo: ''});
   };
 
-  // Guarda no banco de dados os cadastros após as verificações
-  async function guardaCadastro() {
+  // Pega os dados de cadastro depois de verificados e atualiza o banco
+  async function atualizaCadastro() {
     dados = {
-      id: idDisponivelAssociado,
+      id: dadosAssociado.id,
       nomeCompleto: dadosAssociado.nome,
       email: dadosAssociado.email,
       telefone: dadosAssociado.telefone,
@@ -162,17 +185,18 @@ export default function RegisterScreen() {
       numVisitas: dadosAssociado.numVisitas,
     };
 
-    // Pega o banco de dados
     const realm = await getRealm();
 
-    // Abre o banco em modo de escrita
     realm.write(() => {
-      realm.create('Associate', dados); // Cria um novo cadastro com os dados digitados
+      /* A condição true indica que se existir um dado
+       * com a mesma chave primária (id), ele será substituido
+       */
+      realm.create('Associate', dados, true);
     });
   }
 
-  // Verifica os erros de dados e cadastra se tudo estiver correto
-  async function cadastra() {
+  // Valida os dados a serem atualizados e atualiza se estiverem corretos, voltando para a tela de Atualizar Associados
+  async function atualiza() {
     let verificaErros = 0;
     let mensagemErro = [];
 
@@ -239,27 +263,15 @@ export default function RegisterScreen() {
       inputSexo: mensagemErro[5],
     });
     if (verificaErros === 0) {
-      cadastros.map(item => {
-        if (idDisponivelAssociado === item.id) {
-          idDisponivelAssociado++;
-        }
-      }); // Pega o próximo id disponível
-      await guardaCadastro(); // Espera mandar o cadastro para o banco de dados dos associados
-      Alert.alert('Cadastro realizado com sucesso!');
-      setDadosAssociado({
-        nome: '',
-        email: '',
-        telefone: '',
-        numDependentes: '',
-        nascimento: '',
-        sexo: '',
-        numVisitas: 0,
-        masculino: false,
-        feminino: false,
-        outros: false,
-      }); // Apaga os inputs de dados
+      await atualizaCadastro();
+      props.navigation.pop(); // Volta uma tela
+      props.navigation.getParam('setRefresh')(
+        !props.navigation.getParam('refresh'),
+      ); // Atualiza a FlatList assim que volta
+      Alert.alert('Cadastro atualizado com sucesso!');
+      props.navigation.getParam('listaTodosAssociados')(); // Lista todos os associados
     } else {
-      Alert.alert('Não foi possível realizar o cadastro!');
+      Alert.alert('Não foi possível atualizar o cadastro!');
     }
   }
 
@@ -271,7 +283,7 @@ export default function RegisterScreen() {
         contentContainerStyle={{flexGrow: 1}}
         showsVerticalScrollIndicator={false}>
         <View style={styles.principalContainer}>
-          <Header textHeader="Cadastro de Associados" />
+          <Header textHeader="Editar dados do Associado" />
 
           <View style={styles.principalInputContainer}>
             <Input
@@ -356,45 +368,83 @@ export default function RegisterScreen() {
               <Text style={styles.errorText}>{erro.inputNascimento}</Text>
             </View>
 
-            <View style={styles.principalGenderContainer}>
-              <View style={styles.genderContainer}>
-                <View style={styles.genderHeader}>
-                  <IconCommunity
-                    name="human-male-female"
-                    size={24}
-                    color="#FFF"
-                  />
-                  <Text style={styles.textGenderHeader}>SEXO: </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+              }}>
+              <View style={styles.principalGenderContainer}>
+                <View style={styles.genderContainer}>
+                  <View style={styles.genderHeader}>
+                    <IconCommunity
+                      name="human-male-female"
+                      size={24}
+                      color="#FFF"
+                    />
+                    <Text style={styles.genderHeaderText}>SEXO: </Text>
+                  </View>
+                  <View>
+                    <View style={styles.maleContainer}>
+                      <CheckBox
+                        value={dadosAssociado.masculino}
+                        onChange={changeMale}
+                      />
+                      <Text style={styles.textGenders}>Masculino</Text>
+                    </View>
+                    <View style={styles.femaleContainer}>
+                      <CheckBox
+                        value={dadosAssociado.feminino}
+                        onChange={changeFemale}
+                      />
+                      <Text style={styles.textGenders}>Feminino</Text>
+                    </View>
+                    <View style={styles.othersContainer}>
+                      <CheckBox
+                        value={dadosAssociado.outros}
+                        onChange={changeOthers}
+                      />
+                      <Text style={styles.textGenders}>Outros</Text>
+                    </View>
+                  </View>
                 </View>
-                <View>
-                  <View style={styles.maleContainer}>
-                    <CheckBox
-                      value={dadosAssociado.masculino}
-                      onChange={changeMale}
-                    />
-                    <Text style={styles.textGenders}>Masculino</Text>
-                  </View>
-                  <View style={styles.femaleContainer}>
-                    <CheckBox
-                      value={dadosAssociado.feminino}
-                      onChange={changeFemale}
-                    />
-                    <Text style={styles.textGenders}>Feminino</Text>
-                  </View>
-                  <View style={styles.othersContainer}>
-                    <CheckBox
-                      value={dadosAssociado.outros}
-                      onChange={changeOthers}
-                    />
-                    <Text style={styles.textGenders}>Outros</Text>
-                  </View>
+                <Text style={styles.errorText}>{erro.inputSexo}</Text>
+              </View>
+
+              <View style={styles.visitContainer}>
+                <View style={styles.visitHeader}>
+                  <IconAwesome name="walking" size={24} color="#FFF" />
+                  <Text style={styles.visitHeaderText}>VISITAS: </Text>
+                </View>
+                <View style={styles.visitBody}>
+                  <Text style={styles.visitBodyText}>
+                    {dadosAssociado.numVisitas}
+                  </Text>
+                </View>
+                <View style={styles.visitFooter}>
+                  <TouchableOpacity
+                    style={styles.visitActionBox}
+                    onPress={() =>
+                      setDadosAssociado({
+                        ...dadosAssociado,
+                        numVisitas: dadosAssociado.numVisitas + 1,
+                      })
+                    }>
+                    <IconAntDesign name="plus" size={20} color="#FFF" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      ...styles.visitActionBox,
+                      backgroundColor: '#FF3366',
+                    }}
+                    onPress={diminuiNumVisitas}>
+                    <IconAntDesign name="minus" size={20} color="#FFF" />
+                  </TouchableOpacity>
                 </View>
               </View>
-              <Text style={styles.errorText}>{erro.inputSexo}</Text>
             </View>
           </View>
 
-          <CustomButton textButton="CADASTRAR" confirm={cadastra} />
+          <CustomButton textButton="ATUALIZAR" confirm={atualiza} />
         </View>
       </ScrollView>
     </LinearGradient>
@@ -425,7 +475,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   genderContainer: {
-    width: '70%',
     backgroundColor: 'rgba(0,159,253,0.1)',
     borderRadius: 4,
     margin: 5,
@@ -450,7 +499,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     margin: 5,
   },
-  textGenderHeader: {
+  genderHeaderText: {
     color: '#FFF',
     fontSize: 12,
     margin: 5,
@@ -474,5 +523,48 @@ const styles = StyleSheet.create({
   principalDatePickerContainer: {
     alignItems: 'flex-end',
     marginTop: 5,
+  },
+  visitHeaderText: {
+    color: '#FFF',
+    fontSize: 12,
+    marginLeft: 5,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+  },
+  visitActionBox: {
+    backgroundColor: Colors.primaria,
+    borderRadius: 20,
+    padding: 7,
+    margin: 10,
+  },
+  visitContainer: {
+    backgroundColor: 'rgba(0,159,253,0.1)',
+    borderRadius: 4,
+    margin: 10,
+  },
+  visitHeader: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    margin: 5,
+  },
+  visitFooter: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  visitBody: {
+    borderBottomWidth: 1,
+    borderColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  visitBodyText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'rgba(255,255,255,0.7)',
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
   },
 });
