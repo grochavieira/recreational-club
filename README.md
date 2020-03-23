@@ -5,6 +5,8 @@
 
 # Aplicativo de Gerenciamento de um Clube Recreativo
 
+  Esse aplicativo foi desenvolvido com o intuito de criar um app para o gerenciamento de cadastro de associados que frequentam um clube recreativo. Para o desenvolvimento desta aplicação, foi utilizada a linguagem Javascript em conjunto com o framework React Native para desenvolvimento mobile, e para guardar os dados do banco, foi utilizado a biblioteca RealmDB que utiliza o próprio armazenamento do celular.
+
 ## Tela de Login
 
 A tela de login é onde fica a validação de usuário e senha do funcionário, caso ele não tenha esses dados, ele pode clicar no botão "SEM CADASTRO?" para criar um novo cadastro, e caso tenha esquecido a sua senha, ele pode clicar em "ESQUECEU A SENHA?" para recuperar a mesma.
