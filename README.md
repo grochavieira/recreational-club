@@ -49,12 +49,53 @@
 
 ## ⚙️ Funcionalidades
 
-- [ ] - [ ]
-  - [ ]
-  - [ ]
+- [x] É possível um funcionário se cadastrar no sistema inserindo:
 
-- [ ] - [ ]
-  - [ ]
+  - [x] Dados pessoais, como nome, email, telefone...;
+  - [x] Senha para logar no sistema após o cadastro;
+  - [x] Chave de acesso (que foi definida como "projetomobile").
+
+- [x] Um funcionário pode recuperar sua senha inserindo:
+
+  - [x] Seu email;
+  - [x] Seu nome de usuário;
+  - [x] Chave de cadastro do sistema.
+
+- [x] Um funcionário pode logar no sistema inserindo:
+
+  - [x] Seu usuário;
+  - [x] Sua senha.
+
+- [x] Ao acessar o sistema, o usuário podera navegar nas telas:
+
+  - [x] De Cadastrar associado;
+  - [x] De Listar associados;
+  - [x] De Atualizar associados;
+  - [x] De Remover associados;
+  - [x] Sobre
+
+- [x] É possível cadastrar um novo associado inserindo:
+
+  - [x] Seus dados pessoais;
+  - [x] Sua data de nascimento (por meio da escolha de data nativa do sistema);
+  - [x] Seu sexo (através de checkboxes).
+
+- [x] É possível pesquisar por associados:
+
+  - [x] Pelo seu nome;
+  - [x] Listando todos.
+
+- [x] É possível atualizar os dados de um associado:
+
+  - [x] Ao pesquisar por um associado existente;
+  - [x] Ao alterar seus dados na tela de atualização.
+
+- [x] É possível remover um associado:
+
+  - [x] Ao pesquisar por um associado existente;
+  - [x] Ao confirmar sua exclusão.
+
+- [x] Tela apresenta informações sobre os desenvolvedores do sistema.
 
 ---
 
