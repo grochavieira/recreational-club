@@ -270,7 +270,6 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/grochavieira"><img style="border-radius: 50%;" src="https://avatars1.githubusercontent.com/u/48029638?s=460&u=f8d11a7aa9ce76a782ef140a075c5c81be878f00&v=4" width="100px;" alt=""/><br /><sub><b> Guilherme Rocha </b></sub></a><br /><a href="https://www.linkedin.com/in/grochavieira/" title="Linkedin">🦸‍♂️</a></td>
     <td align="center"><a href="https://github.com/thomasafc"><img style="border-radius: 50%;" src="https://avatars1.githubusercontent.com/u/48140030?s=460&v=4" width="100px;" alt=""/><br /><sub><b> Thomas Anderson </b></sub></a><br /><a href="https://github.com/thomasafc" title="Github">🦸‍♂️</a></td>
     <td align="center"><a href="https://github.com/victor-m302"><img style="border-radius: 50%;" src="https://avatars2.githubusercontent.com/u/49913795?s=460&u=c6146fa6f6ee284c21a2c18daf33e5b066897309&v=4" width="100px;" alt=""/><br /><sub><b> Victor Masumoto </b></sub></a><br /><a href="https://github.com/victor-m302 " title="Github">🦸‍♂️</a></td>
 
