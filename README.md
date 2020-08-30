@@ -238,7 +238,8 @@ $ yarn install
 # Execute a aplicação em modo de desenvolvimento
 $ react-native run-android
 
-# Lembre-se de conectar o celular, ou inicializar a simulação, no computador antes de executar o comando acima!!!
+# Lembre-se de conectar o celular, ou inicializar a simulação, no computador
+# antes de executar o comando acima!!!
 
 ```
 
