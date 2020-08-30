@@ -8,6 +8,10 @@
   </a>
     
    <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen?style=for-the-badge">
+
+   <a href="https://github.com/grochavieira">
+    <img alt="Feito por Guilherme Rocha Vieira" src="https://img.shields.io/badge/feito%20por-grochavieira-%237519C1?style=for-the-badge&logo=github">
+  </a>
   
  
 </p>
@@ -61,19 +65,19 @@
 A tela de login é onde fica a validação de usuário e senha do funcionário, caso ele não tenha esses dados, ele pode clicar no botão "SEM CADASTRO?" para criar um novo cadastro, e caso tenha esquecido a sua senha, ele pode clicar em "ESQUECEU A SENHA?" para recuperar a mesma.
 
 <p align="center">
-  <img width="300" height="500" src="mobile/assets/telaLogin.png">
+  <img width="300" height="500" src="assets/telaLogin.png">
 </p>
 
 Além disso ao tentar entrar, ele verifica se o usuário existe, caso não exista, ele exibe uma mensagem de erro.
 
 <p align="center">
-  <img src="mobile/assets/telaLoginErroUsuario.PNG">
+  <img src="assets/telaLoginErroUsuario.PNG">
 </p>
 
 E se o usuário existe, ele verifica se a senha está correta e vai para a tela principal, caso contrário ele exibe uma mensagem de erro.
 
 <p align="center">
-  <img src="mobile/assets/telaLoginErroSenha.PNG">
+  <img src="assets/telaLoginErroSenha.PNG">
 </p>
 
 ## Tela de Cadastro de Funcionário
@@ -81,15 +85,15 @@ E se o usuário existe, ele verifica se a senha está correta e vai para a tela 
 Essa tela é utilizada para cadastrar novos funcionários, caso eles não tenham seu registro no banco ainda.
 
 <p align="center">
-  <img width="300" height="500" src="mobile/assets/telaCadastroFuncionario1.png">
-  <img width="300" height="500" src="mobile/assets/telaCadastroFuncionario2.png">
+  <img width="300" height="500" src="assets/telaCadastroFuncionario1.png">
+  <img width="300" height="500" src="assets/telaCadastroFuncionario2.png">
 </p>
 
 Ela também verifica erros de input do usuário antes de cadastrá-lo.
 
 <p align="center">
-  <img width="300" height="500" src="mobile/assets/telaCadastroFuncionarioErro1.png">
-  <img width="300" height="500" src="mobile/assets/telaCadastroFuncionarioErro2.png">
+  <img width="300" height="500" src="assets/telaCadastroFuncionarioErro1.png">
+  <img width="300" height="500" src="assets/telaCadastroFuncionarioErro2.png">
 </p>
 
 ## Tela de Recuperar Senha
@@ -97,19 +101,19 @@ Ela também verifica erros de input do usuário antes de cadastrá-lo.
 Essa tela é utilizada para recuperar a senha do funcionário através do seu email, usuário e chave de cadastro.
 
 <p align="center">
-  <img src="mobile/assets/telaEsqueceuSenha.png">
+  <img src="assets/telaEsqueceuSenha.png">
 </p>
 
 Se os dados digitados estiverem corretos, ele exibe uma mensagem com a senha do usuário.
 
 <p align="center">
-  <img src="mobile/assets/telaEsqueceuSenhaFuncionando.png">
+  <img src="assets/telaEsqueceuSenhaFuncionando.png">
 </p>
 
 Caso contrário, ela exibe os erros de input.
 
 <p align="center">
-  <img src="mobile/assets/telaEsqueceuSenhaErro.png">
+  <img src="assets/telaEsqueceuSenhaErro.png">
 </p>
 
 ## Tela Principal
@@ -117,7 +121,7 @@ Caso contrário, ela exibe os erros de input.
 Na tela principal é onde o usuário poderá cadastrar, listar, atualizar e remover os associados que frequentam o clube, além da tela sobre com informações minímas da aplicação.
 
 <p align="center">
-  <img src="mobile/assets/telaPrincipal.png">
+  <img src="assets/telaPrincipal.png">
 </p>
 
 ## Tela de Cadastro de Associados
@@ -125,15 +129,15 @@ Na tela principal é onde o usuário poderá cadastrar, listar, atualizar e remo
 Aqui é onde os associados são cadastrados, com campos para inserir nome, email, telefone, número de dependentes (parentes), data de nascimento e sexo.
 
 <p align="center">
-  <img width="300" height="500" src="mobile/assets/telaCadastroAssociado1.png">
-  <img width="300" height="500" src="mobile/assets/telaCadastroAssociado2.png">
+  <img width="300" height="500" src="assets/telaCadastroAssociado1.png">
+  <img width="300" height="500" src="assets/telaCadastroAssociado2.png">
 </p>
 
 Ele também faz a verificação de dados antes de realizar o cadastro do associado.
 
 <p align="center">
-  <img width="300" height="500" src="mobile/assets/telaCadastroAssociadoErro1.png">
-  <img width="300" height="500" src="mobile/assets/telaCadastroAssociadoErro2.png">
+  <img width="300" height="500" src="assets/telaCadastroAssociadoErro1.png">
+  <img width="300" height="500" src="assets/telaCadastroAssociadoErro2.png">
 </p>
 
 ## Tela de Listar Associados
@@ -141,13 +145,13 @@ Ele também faz a verificação de dados antes de realizar o cadastro do associa
 Essa tela faz a listagem dos associados cadastrados no clube.
 
 <p align="center">
-  <img src="mobile/assets/telaListaAssociado.png">
+  <img src="assets/telaListaAssociado.png">
 </p>
 
 Também é possível pesquisar pelo nome dos associados existentes para mostrar na listagem, além de listar todos que já existem clicando no botão "LISTAR TODOS OS ASSOCIADOS".
 
 <p align="center">
-  <img src="mobile/assets/telaListaAssociadoPesquisando.png">
+  <img src="assets/telaListaAssociadoPesquisando.png">
 </p>
 
 ## Tela de Atualizar Associados
@@ -155,7 +159,7 @@ Também é possível pesquisar pelo nome dos associados existentes para mostrar 
 Essa tela é utilizada para atualizar o cadastro dos associados, além de ser capaz de pesquisar e listar os associados, assim como na tela de listar associados, e para atualizar os dados, basta clicar no botão "ATUALIZAR" do cadastro desejado, mandando esses dados para serem editados na tela de editar associados.
 
 <p align="center">
-  <img src="mobile/assets/telaAtualizaAssociado.png">
+  <img src="assets/telaAtualizaAssociado.png">
 </p>
 
 ## Tela de Editar Associados
@@ -163,14 +167,14 @@ Essa tela é utilizada para atualizar o cadastro dos associados, além de ser ca
 Essa tela atualiza os dados que foram mandados da tela de atualizar associados, além de poder atualizar o número de visitas do associado.
 
 <p align="center">
-  <img width="300" height="500" src="mobile/assets/telaEditaAssociado1.png">
-  <img width="300" height="500" src="mobile/assets/telaEditaAssociado2.png">
+  <img width="300" height="500" src="assets/telaEditaAssociado1.png">
+  <img width="300" height="500" src="assets/telaEditaAssociado2.png">
 </p>
 
 E ao atualizar ele volta para a tela de atualizar e lista novamente todos os cadastros.
 
 <p align="center">
-  <img src="mobile/assets/telaCadastroAtualizado.png">
+  <img src="assets/telaCadastroAtualizado.png">
 </p>
 
 ## Tela de Remover Associados
@@ -178,19 +182,19 @@ E ao atualizar ele volta para a tela de atualizar e lista novamente todos os cad
 Essa tela remove os dados dos associados que foram cadastrados, além de pesquisar e listar os cadastros existentes, assim como a tela de listar e atualizar.
 
 <p align="center">
-  <img src="mobile/assets/telaRemoveAssociado1.png">
+  <img src="assets/telaRemoveAssociado1.png">
 </p>
 
 Ao clicar no botão "REMOVER", ela mostra uma mensagem de confirmação para deletar o cadastro. Clicando em SIM, ele deleta o cadastro, e em NÃO ele cancela a exclusão.
 
 <p align="center">
-  <img src="mobile/assets/telaRemoveAssociado2.png">
+  <img src="assets/telaRemoveAssociado2.png">
 </p>
 
 Assim o cadastro é excluido.
 
 <p align="center">
-  <img src="mobile/assets/telaRemoveAssociado3.png">
+  <img src="assets/telaRemoveAssociado3.png">
 </p>
 
 ## Tela Sobre
@@ -198,7 +202,7 @@ Assim o cadastro é excluido.
 Essa tela contém a informação sobre os desenvolvedores e a versão do projeto.
 
 <p align="center">
-  <img src="mobile/assets/telaSobre.png">
+  <img src="assets/telaSobre.png">
 </p>
 
 ---
