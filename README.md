@@ -255,7 +255,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - **[React Native Date Picker](https://github.com/xgfe/react-native-datepicker)**
 - **[Realm](https://realm.io/blog/introducing-realm-react-native/)**
 
-> Veja o arquivo [package.json](https://github.com/grochavieira/RecreationalClub/blob/master/web/package.json)
+> Veja o arquivo [package.json](https://github.com/grochavieira/RecreationalClub/blob/master/mobile/package.json)
 
 #### **Utilitários**
 
