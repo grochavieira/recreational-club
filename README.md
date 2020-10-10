@@ -106,7 +106,7 @@
 A tela de login é onde fica a validação de usuário e senha do funcionário, caso ele não tenha esses dados, ele pode clicar no botão "SEM CADASTRO?" para criar um novo cadastro, e caso tenha esquecido a sua senha, ele pode clicar em "ESQUECEU A SENHA?" para recuperar a mesma.
 
 <p align="center">
-  <img src="assets/telaLogin.jpeg">
+  <img width="300px" src="assets/telaLogin.jpeg">
 </p>
 
 Além disso ao tentar entrar, ele verifica se o usuário existe, caso não exista, ele exibe uma mensagem de erro.
