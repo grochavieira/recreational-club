@@ -16,7 +16,7 @@
  
 </p>
 <h1 align="center">
-  <img src="assets/sports_club_logo.png">
+  <img width="200px" height="200px" src="assets/sports_club_logo.png">
 </h1>
 
 <h4 align="center"> 
