@@ -16,7 +16,7 @@
  
 </p>
 <h1 align="center">
-    Recreational Club
+  <img width="300" height="500" src="assets/sports_club_logo.png">
 </h1>
 
 <h4 align="center"> 
@@ -106,7 +106,7 @@
 A tela de login é onde fica a validação de usuário e senha do funcionário, caso ele não tenha esses dados, ele pode clicar no botão "SEM CADASTRO?" para criar um novo cadastro, e caso tenha esquecido a sua senha, ele pode clicar em "ESQUECEU A SENHA?" para recuperar a mesma.
 
 <p align="center">
-  <img width="300" height="500" src="assets/telaLogin.png">
+  <img width="300" height="500" src="assets/telaLogin.jpg">
 </p>
 
 Além disso ao tentar entrar, ele verifica se o usuário existe, caso não exista, ele exibe uma mensagem de erro.
@@ -240,10 +240,10 @@ Assim o cadastro é excluido.
 
 ## Tela Sobre
 
-Essa tela contém a informação sobre os desenvolvedores e a versão do projeto.
+Essa tela contém a informação sobre a versão do projeto.
 
 <p align="center">
-  <img src="assets/telaSobre.png">
+  <img src="assets/telaSobre.jpg">
 </p>
 
 ---
