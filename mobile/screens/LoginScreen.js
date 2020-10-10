@@ -6,9 +6,11 @@ import {
   Alert,
   Text,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import sportsLogo from '../img/sports_club_logo.png';
 
 import Input from '../components/Input';
 import PasswordInput from '../components/PasswordInput';
@@ -110,6 +112,8 @@ export default function LoginScreen(props) {
     }
   }
 
+  // <Icon name="headset" size={150} color="#FFF" />
+
   return (
     <LinearGradient
       colors={[Colors.primaria, Colors.secundaria]}
@@ -119,7 +123,10 @@ export default function LoginScreen(props) {
         showsVerticalScrollIndicator={false}>
         <View style={styles.principalContainer}>
           <Header textHeader="Bem Vindo ao Clube Recreativo" />
-          <Icon name="headset" size={150} color="#FFF" />
+          <Image
+            source={sportsLogo}
+            style={{width: 180, height: 180, marginTop: -20}}
+          />
           <View style={styles.loginContainer}>
             <Input
               nameIcon="account-box"
