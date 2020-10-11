@@ -95,7 +95,7 @@
   - [x] Ao pesquisar por um associado existente;
   - [x] Ao confirmar sua exclusão.
 
-- [x] Tela apresenta informações sobre os desenvolvedores do sistema.
+- [x] Tela apresenta informações sobre a versão do sistema.
 
 ---
 
