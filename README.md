@@ -1,10 +1,10 @@
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/grochavieira/RecreationalClub?color=%2304D361&style=for-the-badge">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/grochavieira/recreational-club?color=%2304D361&style=for-the-badge">
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/grochavieira/RecreationalClub?style=for-the-badge">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/grochavieira/recreational-club?style=for-the-badge">
   
-  <a href="https://github.com/grochavieira/RecreationalClub/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/grochavieira/RecreationalClub?style=for-the-badge">
+  <a href="https://github.com/grochavieira/recreational-club/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/grochavieira/recreational-club?style=for-the-badge">
   </a>
     
    <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen?style=for-the-badge">
@@ -20,7 +20,7 @@
 </h1>
 
 <h4 align="center"> 
-	🚧  Mobile completo 🚧
+	🚧  Aplicação finalizada! 🚧
 </h4>
 
 ## 🏁 Tópicos
@@ -265,10 +265,10 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 ```bash
 
 # Clone este repositório
-$ git clone https://github.com/grochavieira/RecreationalClub.git
+$ git clone https://github.com/grochavieira/recreational-club.git
 
 # Acesse a pasta do projeto no seu terminal/cmd
-$ cd RecreationalClub
+$ cd recreational-club
 
 # Vá para a pasta da aplicação mobile
 $ cd mobile
@@ -297,7 +297,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - **[React Native Date Picker](https://github.com/xgfe/react-native-datepicker)**
 - **[Realm](https://realm.io/blog/introducing-realm-react-native/)**
 
-> Veja o arquivo [package.json](https://github.com/grochavieira/RecreationalClub/blob/master/mobile/package.json)
+> Veja o arquivo [package.json](https://github.com/grochavieira/recreational-club/blob/master/mobile/package.json)
 
 #### **Utilitários**
 
